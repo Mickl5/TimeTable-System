@@ -3,12 +3,12 @@ import java.util.ArrayList;
 public class Modules {
     private String Name;
     private String Code;
-    private int Year;
+    private ArrayList<SubjectsYear> years;
 
-public Modules( String Name, String Code, int Year){
+public Modules(String Name, String Code){
     this.Name=Name;
     this.Code=Code;
-    this.Year=Year;
+    this.years = new ArrayList<>();
 }
 public void ShowInfo(){
     System.out.println("Module Name: " + Name);
@@ -16,3 +16,4 @@ public void ShowInfo(){
     System.out.println("Module Year: " + Year);
 }
 }
+
