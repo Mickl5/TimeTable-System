@@ -4,16 +4,22 @@ import java.util.ArrayList;
 public class Timetable {
 
     /**Defines the array list*/
-    ArrayList<ArrayList<String>> sessions;
+    ArrayList<Session> sessions;
 
     /**The timetable is given substance*/
     public void timetable(){
-        sessions = new ArrayList<ArrayList<String>>();
+        sessions = new ArrayList<Session>();
 
     }
 
     /**Gets the session*/
-    public ArrayList<ArrayList<String>> getSessions() {
+    public ArrayList<Session> getSessions() {
         return sessions;
     }
+
+    /**Adds a session to the timetable*/
+    public void addSession(Session session){
+        sessions.add (session);
+    }
+
 }
