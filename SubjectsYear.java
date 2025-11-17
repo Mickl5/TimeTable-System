@@ -14,8 +14,10 @@ public SubjectsYear(int Year) {
 }
 public void addModule(Module module){
     Modules.add(module);
+    
 }
 }
+
 
 
 
