@@ -2,21 +2,21 @@ import java.util.ArrayList;
 
 public class ModuleYear {
     private int Year;
-    ArrayList<Module>Modules;
+    ArrayList<ModuleOffering> semester1Modules;
+    ArrayList<ModuleOffering> semester2Modules;
 
-public ModuleYear(int Year, ArrayList<Module> Modules) {
+public ModuleYear(int Year) {
     this.Year=Year;
-    this.Modules=Modules;
+    this.semester1Modules = new ArrayList<>();
+    this.semester2Modules = new ArrayList<>();
 
 
 }
 public void addModule(Module module){
     Modules.add(module);
 }
-public ArrayList<Module> getModules(){
-    return this.Modules;
 }
-    }
+
 
 
 
