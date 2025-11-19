@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -26,6 +25,7 @@ public class CSVDataManager {
         this.timetable = new Timetable();
         this.groups = new ArrayList<>();
     }
+
 
     //                  ROOM FUNCTIONS
     /**
@@ -162,7 +162,7 @@ public class CSVDataManager {
      * @param module the object that will be transformed into an array of type string containing the values for the csv
      * */
     private String[] toCSV(Module module) {
-        return new String[]{ module.getName(), module.getCode(), String.valueOf(module.getLecHours()), String.valueOf(module.getLabHours()),
+        return new String[]{module.getCode(), module.getName(), String.valueOf(module.getLecHours()), String.valueOf(module.getLabHours()),
                 String.valueOf(module.getTutHours())
         };
     }
@@ -175,11 +175,11 @@ public class CSVDataManager {
      * Loads the data of all programmes from the csv file specified
      * @param filePath the filepath to a csv file to get all the programmes information from there
      * */
-    public void loadProgramme(String filePath) throws IOException {
+    public void loadSubject(String filePath) throws IOException {
         subjects.clear();
         ArrayList<String[]> rows = CSVutils.readCSV(filePath);
         for (String[] row : rows) {
-            subjects.add(parseProgramme(row));
+            subjects.add(parseSubject(row));
         }
     }
 
@@ -187,7 +187,7 @@ public class CSVDataManager {
      * Saves the data of all programmes to the csv file specified
      * @param filePath the filepath to a csv file to store all the information of the programmes
      * */
-    public void saveProgramme(String filePath) throws IOException {
+    public void saveSubject(String filePath) throws IOException {
         ArrayList<String[]> rows = new ArrayList<>();
         for (Subjects subject : subjects) {
             rows.add(toCSV(subject));
@@ -196,10 +196,47 @@ public class CSVDataManager {
     }
 
     /**
+     * Loads the subject structure meaning the subject year class in a csv friendly way
+     * @param filePath the file to be read from
+     * */
+    public void loadProgrammeStructure(String filePath) throws IOException {
+        ArrayList<String[]> rows = CSVutils.readCSV(filePath);
+
+        for(String[] row : rows) {
+            if (row.length < 4) continue;
+
+            String programmeCode = row[0];
+            int yearNumber = Integer.parseInt(row[1]);
+            int semester = Integer.parseInt(row[2]);
+            String moduleCode = row[3];
+
+            Subjects subject = getSubjectById(programmeCode);
+            SubjectsYear year = subject.getYear(yearNumber);
+            if (year == null) {
+                year = new SubjectsYear(yearNumber);
+                subject.addYear(year);
+            }
+
+            Module module = getModuleById(moduleCode);
+            ModuleOffering offering = new ModuleOffering(module, semester);
+
+            if (semester == 1) {
+                year.getModulesForSemester(1).add(offering);
+            }
+            else if(semester == 2) {
+                year.getModulesForSemester(2).add(offering);
+            }
+            else {
+                System.out.println("Invalid semester number");
+            }
+        }
+    }
+
+    /**
      * It translates an array of values from a csv file to an actual object of type Lecturer
      * @param fields the array of values taken from the csv file
      * */
-    private Subjects parseProgramme(String[] fields) {
+    private Subjects parseSubject(String[] fields) {
         if (fields.length < 2) return null;
         return new Subjects(fields[0], fields[1]);
     }
@@ -254,7 +291,7 @@ public class CSVDataManager {
         Lecturer lecturer = getLecturerById(fields[4]);
         StudentGroup group = getGroupById(fields[5]);
         return new Session(
-          fields[0], type, module, room, lecturer, group, DayOfWeek.valueOf(fields[6]), LocalTime.parse(fields[7]),
+                fields[0], type, module, room, lecturer, group, DayOfWeek.valueOf(fields[6]), LocalTime.parse(fields[7]),
                 Integer.parseInt(fields[8]), Integer.parseInt(fields[9])
         );
     }
@@ -265,7 +302,7 @@ public class CSVDataManager {
      * */
     private String[] toCSV(Session session) {
         return new String[]{session.getSessionId(), String.valueOf(session.getType()), session.getModule().getCode(),
-                session.getRoom().GetRoomId(), session.getLecturer().getLecturerId(), String.valueOf(session.getDayOfWeek()),
+                session.getRoom().GetRoomId(), session.getLecturer().getLecturerId(), session.getGroup().getGroupId(), String.valueOf(session.getDayOfWeek()),
                 String.valueOf(session.getTime()), String.valueOf(session.getDurationMinutes()),
                 String.valueOf(session.getSemesterNumber())
         };
@@ -310,13 +347,19 @@ public class CSVDataManager {
 
         String groupId = fields[0];
         String programmeCode = fields[1];
-        int yearNumebr = Integer.parseInt(fields[2]);
+        int yearNumber = Integer.parseInt(fields[2]);
         int size = Integer.parseInt(fields[3]);
         String parentGroupId = fields.length > 4 ? fields[4] : "";
 
-        Subjects subject = getProgrammeById(programmeCode);
-        SubjectsYear year = subject.getYear(yearNumebr);
-        StudentGroup group = new StudentGroup(groupId, subject, year, size);
+        Subjects programme = getSubjectById(programmeCode);
+        if (programme == null) {
+            System.out.println("Warning: Programme " + programmeCode + " not found for group " + groupId);
+        }
+        SubjectsYear year = programme.getYear(yearNumber);
+        if (year == null) {
+            System.out.println("Warning: Year " + yearNumber + " not found for programme " + programmeCode);
+        }
+        StudentGroup group = new StudentGroup(groupId, programme, year, size);
 
         if (!parentGroupId.isEmpty()) {
             StudentGroup parent = getGroupById(parentGroupId);
@@ -415,11 +458,12 @@ public class CSVDataManager {
      * If it doesn't exist it returns null.
      * @param subjectId the module code to search for
      * */
-    private Subjects getProgrammeById(String subjectId) {
+    private Subjects getSubjectById(String subjectId) {
         for (Subjects subject : subjects) {
-            if (subject.getCode().equals(subjectId)) return subject;
+            if (subject.getCode().equals(subjectId)) {
+                return subject;
+            }
         }
         return null;
     }
 }
-

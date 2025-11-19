@@ -7,9 +7,8 @@ public class Timetable {
     ArrayList<Session> sessions;
 
     /**The timetable is given substance*/
-    public void timetable(){
+    public Timetable(){
         sessions = new ArrayList<Session>();
-
     }
 
     /**Gets the session*/

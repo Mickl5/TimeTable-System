@@ -18,7 +18,7 @@ public class Module {
      * @param labHours the amount of lab hours for the module object
      * @param lecHours the amount of lecture hours for the module object
      * @param tutHours the amount of tutorial hours for the module object*/
-    public Module(String name, String code, int labHours, int tutHours, int lecHours) {
+    public Module(String code, String name, int labHours, int tutHours, int lecHours) {
         this.name = name;
         this.code = code;
         this.labHours = labHours;
