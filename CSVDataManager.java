@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class that uses the CSVutils auxiliary class to translate all the model classes into csv data and vice versa
@@ -13,6 +12,7 @@ public class CSVDataManager {
     private ArrayList<Module> modules;
     private ArrayList<Subjects> subjects;
     private ArrayList<StudentGroup> groups;
+    private ArrayList<User> users;
     private Timetable timetable;
 
     /**
@@ -25,6 +25,7 @@ public class CSVDataManager {
         this.subjects = new ArrayList<>();
         this.timetable = new Timetable();
         this.groups = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
 
@@ -96,7 +97,7 @@ public class CSVDataManager {
      * @param room the object that will be transformed into an array of type string containing the values for the csv
      * */
     private String[] toCSV(Room room) {
-        return new String[]{room.GetRoomId(), room.GetName(), String.valueOf(room.getType()), String.valueOf(room.getCapacity())};
+        return new String[]{room.GetRoomId(), room.GetName(), String.valueOf(room.GetType()), String.valueOf(room.GetCapacity())};
     }
     //                  END OF ROOM FUNCTIONS
 
@@ -132,9 +133,9 @@ public class CSVDataManager {
      * @param fields the array of values taken from the csv file
      * */
     private Lecturer parseLecturer(String[] fields) {
-        if (fields.length < 2) return null;
+        if (fields.length < 3) return null;
         return new Lecturer(
-                fields[0], fields[1]
+                fields[0], fields[1], LecturerType.valueOf(fields[2])
         );
     }
 
@@ -143,7 +144,7 @@ public class CSVDataManager {
      * @param lecturer the object that will be transformed into an array of type string containing the values for the csv
      * */
     private String[] toCSV(Lecturer lecturer) {
-        return new String[]{lecturer.getLecturerId(), lecturer.getLecturerName()};
+        return new String[]{lecturer.getLecturerId(), lecturer.getLecturerName(), String.valueOf(lecturer.getType())};
     }
     //                  END OF LECTURER FUNCTIONS
 
@@ -468,7 +469,61 @@ public class CSVDataManager {
         return "";
     }
 
+    //                  END OF STUDENT GROUP FUNCTIONS
 
+
+    //                  USER FUNCTIONS
+    /**
+     * Loads the data of all user from the csv file specified
+     * @param filePath the filepath to a csv file to get all the user information from there
+     * */
+    public void loadUsers(String filePath) throws IOException {
+        users.clear();
+        ArrayList<String[]> rows = CSVutils.readCSV(filePath);
+        for (String[] row : rows) {
+            users.add(parseUser(row));
+        }
+    }
+
+    /**
+     * Saves the data of all users to the csv file specified
+     * @param filePath the filepath to a csv file to store all the information of the users
+     * */
+    public void saveUsers(String filePath) throws IOException {
+        ArrayList<String[]> rows = new ArrayList<>();
+
+        for (User user : users) {
+            rows.add(toCSV(user));
+        }
+        CSVutils.writeCSV(filePath, rows);
+    }
+
+    /**
+     * It translates an object into an array of values to be written inside a csv
+     * @param user the object that will be transformed into an array of type string containing the values for the csv
+     * */
+    public String[] toCSV(User user) {
+        String linkedId = String.valueOf(user.getLinkedId()) != null ? String.valueOf(user.getLinkedId()) : "";
+        return new String[]{user.getUserId(), user.getName(), user.getPassword(), String.valueOf(user.getType()), linkedId};
+    }
+
+    /**
+     * It translates an array of values from a csv file to an actual object of type User
+     * @param fields the array of values taken from the csv file
+     * */
+    public User parseUser(String[] fields) {
+        String userId = fields[0];
+        String name = fields[1];
+        String password = fields[2];
+        String roleStr = fields[3];
+        String linkedId = (fields.length > 4) ? fields[4] : "";
+
+        UserType type = UserType.valueOf(roleStr);
+
+        return new User(userId, name, password, type, linkedId);
+    }
+
+    //                  END OF USER FUNCTIONS
 
     //                  PRIVATE GETTERS FOR EXISTING OBJECTS
     /**

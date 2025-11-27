@@ -116,7 +116,7 @@ public class ScheduleGenerator {
 
                         if (end.isAfter(LocalTime.of(18, 0))) continue;
 
-                        Lecturer lecturer = findAvailableLecturer(module.getLecturers(), module, g, day, startTime,
+                        Lecturer lecturer = findAvailableLecturer(module.getLecturers(), module, type, g, day, startTime,
                                 durationMins, semesterNumber, existing);
                         if (lecturer == null) continue;
 
@@ -148,9 +148,18 @@ public class ScheduleGenerator {
      * @param existing array list of existing sessions
      * @return the first available lecturer
      * */
-    public Lecturer findAvailableLecturer(ArrayList<Lecturer> lecturers, Module module, StudentGroup group, DayOfWeek day,
+    public Lecturer findAvailableLecturer(ArrayList<Lecturer> lecturers, Module module, SessionType type, StudentGroup group, DayOfWeek day,
                                           LocalTime startTime, int durationMins, int semesterNumber, ArrayList<Session> existing) {
+        LecturerType requiredType;
+        if (type == SessionType.LECTURE) {
+            requiredType = LecturerType.LECTURER;
+        }
+        else {
+            requiredType = LecturerType.TA;
+        }
         for (Lecturer lecturer : lecturers) {
+            if (!requiredType.equals(lecturer.getType())) continue;
+            System.out.println("Checking for lecturer type " + String.valueOf(requiredType));
             Session session = createSession(SessionType.LECTURE, module, null, lecturer, group, day, startTime, durationMins, semesterNumber);
             if (!ConflictChecker.hasConflict(session, existing)) {
                 return lecturer;
@@ -191,8 +200,8 @@ public class ScheduleGenerator {
         }
 
         for (Room room : rooms) {
-            if (room.getCapacity() < groupSize) continue;
-            if (room.getType() != roomType) continue;
+            if (room.GetCapacity() < groupSize) continue;
+            if (room.GetType() != roomType) continue;
 
             Session candidate = createSession(type, module, room, lecturer, group, day, startTime, durationMins, semesterNumber);
             if (!ConflictChecker.hasConflict(candidate, existing)) {
