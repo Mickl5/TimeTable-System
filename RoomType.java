@@ -1,3 +1,3 @@
 public enum RoomType {
-    CLASSROOM, LAB;
+    CLASSROOM, GENERALLAB, SCIENCELAB, CSLAB
 }

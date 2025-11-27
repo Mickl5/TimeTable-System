@@ -14,6 +14,7 @@ public class Session {
     private LocalTime Time;
     private DayOfWeek day;
     private int durationMinutes;
+    private int semesterNumber;
 
     /**
      * creates a session with a code, what type of class, module, room, time, etc
@@ -26,9 +27,10 @@ public class Session {
      * @param day what day it's on
      * @param time what time it's on
      * @param durationMinutes how long the class is
+     * @param semesterNumber what semester this session is in
      */
     public Session(String sessionId, SessionType type, Module module, Room room, Lecturer lecturer, StudentGroup group,
-                   DayOfWeek day, LocalTime time, int durationMinutes) {
+                   DayOfWeek day, LocalTime time, int durationMinutes, int semesterNumber) {
 
         this.sessionId = sessionId;
         this.type = type;
@@ -38,6 +40,8 @@ public class Session {
         this.group = group;
         this.Time = time;
         this.durationMinutes = durationMinutes;
+        this.day = day;
+        this.semesterNumber = semesterNumber;
 
     }
 
@@ -111,5 +115,21 @@ public class Session {
      */
     public int getDurationMinutes() {
         return durationMinutes;
+    }
+
+    /**
+     * gets the semester number of the session
+     * @return semester number
+     * */
+    public int getSemesterNumber() {
+        return this.semesterNumber;
+    }
+
+    /**
+     * gets the end time of the session
+     * @return the end time
+     * */
+    public LocalTime getEndTime() {
+        return this.Time.plusMinutes(this.durationMinutes);
     }
 }

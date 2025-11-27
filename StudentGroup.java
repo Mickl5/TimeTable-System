@@ -14,85 +14,71 @@ public class StudentGroup {
     private int noOfStudents;
     private List<Session> sessions;
     private List<StudentGroup> subGroups;
+    private String subjectCode;
+    private int yearNumber;
 
     /**
      * creates a student group
-     * @param groupId the groups Id
-     * @param subject Subject the group is for
-     * @param subjectYear what year the subject is
-     * @param noOfStudents amount of students in the group
+     * @param groupId
+     * @param subjectCode
+     * @param yearNumber
+     * @param noOfStudents
      */
-    public StudentGroup(String groupId, Subjects subject, SubjectsYear subjectYear, int noOfStudents) {
+    public StudentGroup(String groupId, String subjectCode, int yearNumber, int noOfStudents) {
         this.groupId = groupId;
-        this.subject = subject;
-        this.subjectYear = subjectYear;
+        this.subjectCode = subjectCode;
+        this.yearNumber = yearNumber;
         this.noOfStudents = noOfStudents;
         this.sessions = new ArrayList<>();
         this.subGroups = new ArrayList<>();
     }
 
-    /**
-     * returns the groups Id
-     * @return groupid
-     */
     public String getGroupId() {
         return groupId;
     }
 
-    /**
-     * returns the subject the group is for
-     * @return subject
-     */
     public Subjects getSubject() {
         return subject;
     }
 
-    /**
-     * returns what year the groups subject is
-     * @return subjects year
-     */
     public SubjectsYear getSubjectYear() {
         return subjectYear;
     }
 
-    /**
-     * returns the amount of students in the group
-     * @return number of students
-     */
     public int getNoOfStudents() {
         return noOfStudents;
     }
 
-    /**
-     * returns a list off all sessions(lab, lecs, tuts) the group has
-     * @return sessions
-     */
     public List<Session> getSessions() {
         return sessions;
     }
 
-    /**
-     * adds a session to the groups timetable
-     * @param session the session thats added
-     */
     public void addSession(Session session) {
         sessions.add(session);
     }
 
-    /**
-     * adds a subgroup for labs/tuts etc, to the group
-     * @param subGroup the sub group thats added
-     */
     public void addSubGroup(StudentGroup subGroup) {
         subGroups.add(subGroup);
     }
 
-    /**
-     * returns a list of subgroups
-     * @return sub groups
-     */
     public List<StudentGroup> getSubGroups() {
         return subGroups;
+    }
+
+    public String getSubjectCode() {
+        return this.subjectCode;
+    }
+
+    public int getYearNumber() {
+        return this.yearNumber;
+    }
+
+    public void setProgrammeYear(SubjectsYear year) {
+        this.subjectYear = year;
+    }
+
+    public void setProgramme(Subjects subject) {
+        this.subject = subject;
     }
 }
 

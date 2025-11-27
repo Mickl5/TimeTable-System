@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that uses the CSVutils auxiliary class to translate all the model classes into csv data and vice versa
@@ -24,6 +25,33 @@ public class CSVDataManager {
         this.subjects = new ArrayList<>();
         this.timetable = new Timetable();
         this.groups = new ArrayList<>();
+    }
+
+
+    /**
+     * Method to laodAll the information at once in the correct order
+     * Removes need to manually load everything one by one
+     * and risk of loading in incorrect order
+     * @param programmeFile
+     * @param moduleFile
+     * @param studentGroupFile
+     * @param programmeStructureFile
+     * @param lecturerFile
+     * @param roomFile
+     * @param timetableFile
+     * @param moduleLecturerFile
+     * */
+    public void loadAll(String programmeFile, String moduleFile, String studentGroupFile, String programmeStructureFile,
+                        String lecturerFile, String roomFile, String timetableFile, String moduleLecturerFile) throws IOException {
+        loadSubject(programmeFile);
+        loadModule(moduleFile);
+        loadGroups(studentGroupFile);
+        loadProgrammeStructure(programmeStructureFile);
+        linkGroupsToYear();
+        loadLecturers(lecturerFile);
+        loadRooms(roomFile);
+        loadTimetable(timetableFile);
+        loadModuleLecturer(moduleLecturerFile);
     }
 
 
@@ -134,6 +162,23 @@ public class CSVDataManager {
         }
     }
 
+
+    /**
+     * Links the lecturers to the modules they teach
+     * @param filePath path to csv containing module - leceturers relationship
+     * */
+    public void loadModuleLecturer(String filePath) throws IOException {
+        ArrayList<String[]> rows = CSVutils.readCSV(filePath);
+        for(String[] row : rows) {
+            String moduleCode = row[0];
+            String lecturerId = row[1];
+
+            Module module = getModuleById(moduleCode);
+
+            module.addLecturer(getLecturerById(lecturerId));
+        }
+    }
+
     /**
      * Saves the data of all modules to the csv file specified
      * @param filePath the filepath to a csv file to store all the information of the modules
@@ -152,8 +197,11 @@ public class CSVDataManager {
      * */
     private Module parseModule(String[] fields) {
         if (fields.length < 5) return null;
+
+        RoomType type = fields.length > 5 ? RoomType.valueOf(fields[5]) : null;
+
         return new Module(
-                fields[0], fields[1], Integer.parseInt(fields[2]), Integer.parseInt(fields[3]), Integer.parseInt(fields[4])
+                fields[0], fields[1], Integer.parseInt(fields[2]), Integer.parseInt(fields[3]), Integer.parseInt(fields[4]), type
         );
     }
 
@@ -163,7 +211,7 @@ public class CSVDataManager {
      * */
     private String[] toCSV(Module module) {
         return new String[]{module.getCode(), module.getName(), String.valueOf(module.getLecHours()), String.valueOf(module.getLabHours()),
-                String.valueOf(module.getTutHours())
+                String.valueOf(module.getTutHours()), String.valueOf(module.getLabType())
         };
     }
     //                  END OF MODULE FUNCTIONS
@@ -203,12 +251,13 @@ public class CSVDataManager {
         ArrayList<String[]> rows = CSVutils.readCSV(filePath);
 
         for(String[] row : rows) {
-            if (row.length < 4) continue;
+            if (row.length < 5) continue;
 
             String programmeCode = row[0];
             int yearNumber = Integer.parseInt(row[1]);
             int semester = Integer.parseInt(row[2]);
             String moduleCode = row[3];
+            String studentGroupId = row[4];
 
             Subjects subject = getSubjectById(programmeCode);
             SubjectsYear year = subject.getYear(yearNumber);
@@ -217,18 +266,51 @@ public class CSVDataManager {
                 subject.addYear(year);
             }
 
-            Module module = getModuleById(moduleCode);
-            ModuleOffering offering = new ModuleOffering(module, semester);
+            ModuleOffering offering = findOrCreateOffering(year, semester, moduleCode);
+            StudentGroup group = getGroupById(studentGroupId);
+            offering.addGroup(group);
 
-            if (semester == 1) {
-                year.getModulesForSemester(1).add(offering);
+            if(!year.getModulesForSemester(semester).contains(offering)) {
+                year.getModulesForSemester(semester).add(offering);
             }
-            else if(semester == 2) {
-                year.getModulesForSemester(2).add(offering);
+        }
+    }
+
+    /**
+     * Searches for a module offering to add groups to in the specified year, semester and module
+     * If a group exists it returns it
+     * If not it creates it
+     * @param year the year to be searched for
+     * @param semesterNumber the semester to be searched for
+     * @param moduleCode the module to be searched for
+     * */
+    private ModuleOffering findOrCreateOffering(SubjectsYear year, int semesterNumber, String moduleCode) {
+        for (ModuleOffering offering : year.getModulesForSemester(semesterNumber)) {
+            if (offering.getModule().getCode().equalsIgnoreCase(moduleCode)) {
+                return offering;
             }
-            else {
-                System.out.println("Invalid semester number");
-            }
+        }
+
+        Module module = getModuleById(moduleCode);
+
+        return new ModuleOffering(module, semesterNumber);
+
+    }
+
+
+    /**
+     * Allows partial loading of student groups before the programmeStructure
+     * that defines the years and subjects needed for the group
+     * Overcomes the cyclical dependecy of student groups relying on programmeStructure and
+     * vice versa
+     * */
+    public void linkGroupsToYear() {
+        for (StudentGroup group : groups) {
+            Subjects subject = getSubjectById(group.getSubjectCode());
+            SubjectsYear year = subject.getYear(group.getYearNumber());
+
+            group.setProgramme(subject);
+            group.setProgrammeYear(year);
         }
     }
 
@@ -346,20 +428,12 @@ public class CSVDataManager {
         if (fields.length < 4) return null;
 
         String groupId = fields[0];
-        String programmeCode = fields[1];
+        String subjectCode = fields[1];
         int yearNumber = Integer.parseInt(fields[2]);
         int size = Integer.parseInt(fields[3]);
         String parentGroupId = fields.length > 4 ? fields[4] : "";
 
-        Subjects programme = getSubjectById(programmeCode);
-        if (programme == null) {
-            System.out.println("Warning: Programme " + programmeCode + " not found for group " + groupId);
-        }
-        SubjectsYear year = programme.getYear(yearNumber);
-        if (year == null) {
-            System.out.println("Warning: Year " + yearNumber + " not found for programme " + programmeCode);
-        }
-        StudentGroup group = new StudentGroup(groupId, programme, year, size);
+        StudentGroup group = new StudentGroup(groupId, subjectCode, yearNumber, size);
 
         if (!parentGroupId.isEmpty()) {
             StudentGroup parent = getGroupById(parentGroupId);
@@ -396,7 +470,7 @@ public class CSVDataManager {
 
 
 
-    //                  GETTERS FOR EXISTING OBJECTS
+    //                  PRIVATE GETTERS FOR EXISTING OBJECTS
     /**
      * returns the module with the given id.
      * If it doesn't exist it returns null.
@@ -465,5 +539,23 @@ public class CSVDataManager {
             }
         }
         return null;
+    }
+
+
+    //                  PUBLIC GETTERS AND SETTERS
+    public ArrayList<Subjects> getSubjects() {
+        return this.subjects;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return this.rooms;
+    }
+
+    public Timetable getTimetable() {
+        return this.timetable;
+    }
+
+    public void setTimetable(Timetable timetable) {
+        this.timetable = timetable;
     }
 }
