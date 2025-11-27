@@ -7,6 +7,7 @@ public class User {
     private String name;
     private String password;
     private UserType type;
+    private String LinkedId;
 
     /**
      * creates an empty user object to load CSV
@@ -19,11 +20,12 @@ public class User {
      * @param name the users name
      * @param password the users password
      */
-    public User(String userId, String name, String password, UserType type) {
+    public User(String userId, String name, String password, UserType type, String LinkedId) {
         this.userId = userId;
         this.name = name;
         this.password = password;
         this.type = type;
+        this.LinkedId = LinkedId;
     }
 
     /**
@@ -74,5 +76,17 @@ public class User {
      * @param type the type of user thats logging in (student, lecturer, admin)
      */
     public void setType(UserType type) {this.type = type;}
+
+    /**
+     * gets the linked Id to connect students to their group
+     * @return linkedId
+     */
+    public String getLinkedId() {return LinkedId;}
+
+    /**
+     * Sets to Id of the group student belongs to
+     * @param LinkedId the group ID the user is linked to
+     */
+    public void setLinkedId(String LinkedId) {this.LinkedId = LinkedId;}
 
 }
