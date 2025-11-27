@@ -6,6 +6,7 @@ public class User {
     private String userId;
     private String name;
     private String password;
+    private UserType type;
 
     /**
      * creates an empty user object to load CSV
@@ -18,10 +19,11 @@ public class User {
      * @param name the users name
      * @param password the users password
      */
-    public User(String userId, String name, String password) {
+    public User(String userId, String name, String password, UserType type) {
         this.userId = userId;
         this.name = name;
         this.password = password;
+        this.type = type;
     }
 
     /**
@@ -60,5 +62,17 @@ public class User {
      * @param userId the ID no. for the user
      */
     public void setUserId(String userId) {this.userId = userId;}
+
+    /**
+     * gets the users type
+     * @return returns the users type
+     */
+    public UserType getType() {return type;}
+
+    /**
+     * sets the users type
+     * @param type the type of user thats logging in (student, lecturer, admin)
+     */
+    public void setType(UserType type) {this.type = type;}
 
 }
