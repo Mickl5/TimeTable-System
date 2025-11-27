@@ -8,6 +8,7 @@ public class Lecturer  {
     private String LecturerId;
     private String LecturerName;
     private List<Session> sessions;
+    private LecturerType type;
 
     /**
      *  creates a lecturer with specific name and id, initialises an empty list of sessions
@@ -18,6 +19,7 @@ public class Lecturer  {
         this.LecturerId = LecturerId;
         this.LecturerName = LecturerName;
         this.sessions = new ArrayList<>();
+        this.type = type;
     }
 
     /**
@@ -34,6 +36,14 @@ public class Lecturer  {
      */
     public String getLecturerName() {
         return LecturerName;
+    }
+
+    /**
+     * gets the lecturers type
+     * @return lecturers type (lecturer/ T/A)
+     */
+    public LecturerType getType() {
+        return type;
     }
 
     /**
