@@ -1,12 +1,13 @@
 public class TimetableController extends Controller {
-    public TimetableController() {
+
+    public TimetableController(CSVDataManager manager) {
         super(manager);
 
     }
 
     public Timetable getTimetableForLecturer(String lecturerID) {
         Timetable timetable = new Timetable();
-        Lecturer lecturer = getManager().getLecturerById();
+        Lecturer lecturer = getManager().getLecturerById(lecturerID);
         for (Session session : getManager().getTimetable().getSessions()) {
             if (session.getLecturer().equals(lecturer)) {
                 timetable.addSession(session);
@@ -31,7 +32,7 @@ public class TimetableController extends Controller {
         Timetable timetable = new Timetable();
         Room room = getManager().getRoomById(roomID);
         for (Session session : getManager().getTimetable().getSessions()) {
-            if (session.getroom().equals(room)) {
+            if (session.getRoom().equals(room)) {
                 timetable.addSession(session);
             }
         }
@@ -42,9 +43,9 @@ public class TimetableController extends Controller {
 
     public Timetable getTimetableForSubject(String subjectCode) {
         Timetable timetable = new Timetable();
-        Subjects subject = getManager().getSubjectByCode(subjectCode);
+        Subjects subject = getManager().getSubjectById(subjectCode);
         for (Session session : getManager().getTimetable().getSessions()) {
-            if (session.getsubject().equals(subject)) {
+            if (session.getGroup().getSubject().equals(subject)) {
                 timetable.addSession(session);
             }
         }
@@ -52,11 +53,11 @@ public class TimetableController extends Controller {
 
     }
 
-    public Timetable getTimetableForSubject(String moduleCode) {
+    public Timetable getTimetableForModule(String moduleCode) {
         Timetable timetable = new Timetable();
-        Module module = getManager().getModuleByCode(moduleCode);
+        Module module = getManager().getModuleById(moduleCode);
         for (Session session : getManager().getTimetable().getSessions()) {
-            if (session.getmodule().equals(module)) {
+            if (session.getModule().equals(module)) {
                 timetable.addSession(session);
             }
         }
