@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class StudentView extends View {
+    private Scanner scanner;
+    UserController userController;
+    String studentGroup;
+
+    public StudentView(TimetableController controller, UserController userController) {
+        super(controller);
+        this.userController = userController;
+        this.scanner = new Scanner(System.in);
+        studentGroup = userController.getCurrentUser().getLinkedId();
+    }
+
+    public void viewMytimetable() {
+        printTimetable(getController().getTimetableForStudent(this.studentGroup).getSessions());
+    }
+
+    public void start(){
+        System.out.println("1) View my timetable");
+        System.out.println("2) View programme timetable");
+        System.out.println("3) View module timetable");
+        System.out.println("4) View room timetable");
+
+        if (ans.equals("1")) {
+            viewMytimetable();
+        }
+        else if (ans.equals("2")) {
+            System.out.println("please enter subject code");
+            String subjectCode =  scanner.nextLine();
+            viewSubjectTimetable(subjectCode);
+        }
+        else if (ans.equals("3")) {
+            System.out.println("please enter module code");
+            String moduleCode =  scanner.nextLine();
+            viewModuleTimetable(moduleCode);
+        }
+        else if (ans.equals("4")) {
+            System.out.println("please enter room code");
+            String roomCode =  scanner.nextLine();
+            viewRoomTimetable(roomCode);
+        }
+    }
+}
