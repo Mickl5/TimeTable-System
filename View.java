@@ -23,6 +23,13 @@ public class View {
         printTimetable(list);
     }
 
+    public void viewRoomTimetable(String roomCode) {
+        ArrayList<Session> list = controller.getTimetableForRoom(roomCode).getSessions();
+        System.out.printf("================= TIMETABLE FOR %s =================\n",roomCode);
+
+        printTimetable(list);
+    }
+
     public void printTimetable(ArrayList<Session> list) {
         // Step 1: group by day
         Map<DayOfWeek, ArrayList<Session>> byDay = new HashMap<>();
