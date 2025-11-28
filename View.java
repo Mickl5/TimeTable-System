@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class View {
-    private TimetableController controller;
+    protected TimetableController controller;
 
     public View(TimetableController controller) {
         this.controller = controller;
@@ -78,4 +78,9 @@ public class View {
         }
     }
 
+    public TimetableController getController() {
+        return this.controller;
+    }
+
 }
+
