@@ -268,6 +268,9 @@ public class CSVDataManager {
             }
 
             ModuleOffering offering = findOrCreateOffering(year, semester, moduleCode);
+            if (getGroupById(studentGroupId) == null) {
+                continue;
+            }
             StudentGroup group = getGroupById(studentGroupId);
             offering.addGroup(group);
 
@@ -631,3 +634,4 @@ public class CSVDataManager {
         return this.lecturers;
     }
 }
+
