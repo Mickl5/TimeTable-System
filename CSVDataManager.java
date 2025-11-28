@@ -525,13 +525,14 @@ public class CSVDataManager {
 
     //                  END OF USER FUNCTIONS
 
-    //                  PRIVATE GETTERS FOR EXISTING OBJECTS
+
+    //                  PUBLIC GETTERS AND SETTERS
     /**
      * returns the module with the given id.
      * If it doesn't exist it returns null.
      * @param moduleCode the module code to search for
      * */
-    private Module getModuleById(String moduleCode) {
+    public Module getModuleById(String moduleCode) {
         for (Module module : modules) {
             if (module.getCode().equals(moduleCode)) {
                 return module;
@@ -545,7 +546,7 @@ public class CSVDataManager {
      * If it doesn't exist it returns null.
      * @param roomId the module code to search for
      * */
-    private Room getRoomById(String roomId) {
+    public Room getRoomById(String roomId) {
         for (Room room : rooms) {
             if (room.GetRoomId().equals(roomId)) {
                 return room;
@@ -559,7 +560,7 @@ public class CSVDataManager {
      * If it doesn't exist it returns null.
      * @param lecturerId the module code to search for
      * */
-    private Lecturer getLecturerById(String lecturerId) {
+    public Lecturer getLecturerById(String lecturerId) {
         for (Lecturer lecturer : lecturers) {
             if (lecturer.getLecturerId().equals(lecturerId)) {
                 return lecturer;
@@ -573,7 +574,7 @@ public class CSVDataManager {
      * If it doesn't exist it returns null.
      * @param groupId the module code to search for
      * */
-    private StudentGroup getGroupById(String groupId) {
+    public StudentGroup getGroupById(String groupId) {
         for (StudentGroup group : groups) {
             if(group.getGroupId().equals(groupId)) {
                 return group;
@@ -587,7 +588,7 @@ public class CSVDataManager {
      * If it doesn't exist it returns null.
      * @param subjectId the module code to search for
      * */
-    private Subjects getSubjectById(String subjectId) {
+    public Subjects getSubjectById(String subjectId) {
         for (Subjects subject : subjects) {
             if (subject.getCode().equals(subjectId)) {
                 return subject;
@@ -597,7 +598,7 @@ public class CSVDataManager {
     }
 
 
-    //                  PUBLIC GETTERS AND SETTERS
+
     public ArrayList<Subjects> getSubjects() {
         return this.subjects;
     }
@@ -612,5 +613,21 @@ public class CSVDataManager {
 
     public void setTimetable(Timetable timetable) {
         this.timetable = timetable;
+    }
+
+    public ArrayList<Module> getModules() {
+        return this.modules;
+    }
+
+    public ArrayList<User> getUsers() {
+        return this.users;
+    }
+
+    public ArrayList<StudentGroup> getGroups() {
+        return this.groups;
+    }
+
+    public ArrayList<Lecturer> getLecturers() {
+        return this.lecturers;
     }
 }
