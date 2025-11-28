@@ -22,7 +22,7 @@ public class ModuleController extends Controller{
      * @param module the module to be added
      */
     public void addModule(Module module) {
-        manager.getModules().add(module);
+        getManager().getModules().add(module);
     }
 
     /**
@@ -31,9 +31,9 @@ public class ModuleController extends Controller{
      * @return if true, the module was found and removed, else input was null
      */
     public boolean removeModule(String moduleId) {
-        for (Module module : manager.getModules()) {
+        for (Module module : getManager().getModules()) {
             if (module.getCode().equals(moduleId)) {
-                manager.getModules().remove(module);
+                getManager().getModules().remove(module);
                 return true;
             }
         }
@@ -47,7 +47,7 @@ public class ModuleController extends Controller{
      * @return the module if its found or null if no module mathces
      */
     public Module getModule(String code) {
-        for (Module module : manager.getModules()) {
+        for (Module module : getManager().getModules()) {
             if (module.getCode().equals(code)) {
                 return module;
             }
