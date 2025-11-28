@@ -23,7 +23,7 @@ public class View {
         printTimetable(list);
     }
 
-    private void printTimetable(ArrayList<Session> list) {
+    public void printTimetable(ArrayList<Session> list) {
         // Step 1: group by day
         Map<DayOfWeek, ArrayList<Session>> byDay = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
