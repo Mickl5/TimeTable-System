@@ -4,38 +4,41 @@ import java.util.ArrayList;
  * a class that controls modules on the timetable vy adding and removing them.
  * ALso adds and removes lecturers
  */
-public class ModuleController {
+public class ModuleController extends Controller{
+
+    CSVDataManager manager;
 
     /**
-     *list that stores all module objects
+     * constructs a new moduleController and initialises it with the datamanager
+     * @param dataManager manages the data
      */
-    private ArrayList<Module> modules;
-
-    /**
-     * constructs a new moduleController and initialises the module list
-     */
-    public ModuleController() {
-        modules = new ArrayList<>();
+    public ModuleController(CSVDataManager dataManager) {
+        super(dataManager);
     }
+
 
     /**
      * adds a module to the controllers list
      * @param module the module to be added
      */
     public void addModule(Module module) {
-        modules.add(module);
+        manager.getModules().add(module);
     }
 
     /**
      * removes a specific module from the controllers list
-     * @param module module to be removed
+     * @param moduleId module to be removed
      * @return if true, the module was found and removed, else input was null
      */
-    public boolean removeModule(Module module) {
-        if (module == null){
-            return false;
+    public boolean removeModule(String moduleId) {
+        for (Module module : manager.getModules()) {
+            if (module.getCode().equals(moduleId)) {
+                manager.getModules().remove(module);
+                return true;
+            }
         }
-        return modules.remove(module);
+        return false;
+
     }
 
     /**
@@ -44,20 +47,12 @@ public class ModuleController {
      * @return the module if its found or null if no module mathces
      */
     public Module getModule(String code) {
-        for (Module module : modules) {
+        for (Module module : manager.getModules()) {
             if (module.getCode().equals(code)) {
                 return module;
             }
         }
         return null;
-    }
-
-    /**
-     * returns a list of all modules being managed by the controller
-     * @return an arrayList of all modules
-     */
-    public ArrayList<Module> getAllModules() {
-        return modules;
     }
 
     /**
@@ -82,16 +77,25 @@ public class ModuleController {
      * @param lecturer the lecturer to be removed
      * @return if true module and lecturer were removed from the list
      */
-    public  boolean removeLecturer(String moduleCode, Lecturer lecturer){
-        if (lecturer == null){
+    public boolean removeLecturer(String moduleCode,  Lecturer lecturer) {
+        if (lecturer == null) {
             return false;
         }
         Module module = getModule(moduleCode);
         if (module == null) {
             return false;
         }
-        return module.getLecturers().remove(lecturer);
+
+        for(int i = 0; i < module.getLecturers().size(); i++) {
+            Lecturer lec = module.getLecturers().get(i);
+            if (lec.getLecturerId().equals(lecturer.getLecturerId())) {
+                module.getLecturers().remove(i);
+                return true;
+            }
+        }
+        return false;
     }
+
 }
 
 
