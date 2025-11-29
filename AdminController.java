@@ -8,7 +8,7 @@ public class AdminController extends Controller {
      * Constructs an AdminController with the CSVDataManager and module CSV path.
      * @param manager the CSV data manager
      */
-    public AdminController(CSVDataManager manager, String moduleCsvFile) {
+    public AdminController(CSVDataManager manager) {
         super(manager);
     }
 
@@ -52,7 +52,7 @@ public class AdminController extends Controller {
             return false;
         }
 
-        StudentGroup newGroup = new StudentGroup(groupId, subject, subjectYear, noOfStudents);
+        StudentGroup newGroup = new StudentGroup(groupId, subject.getCode(), subjectYear.getYearNumber(), noOfStudents);
         getManager().getGroups().add(newGroup);
 
         saveGroups();
