@@ -120,10 +120,26 @@ public class AdminView extends View {
                 System.out.println("Failed to remove session.");
             }
         }
-
+         else if (ans.equals("3")){
+        System.out.println("Please enter the subject code");
+        String subjectCode = scanner.nextLine();
+        viewSubjectTimetable(subjectCode);
+    }
+   else if (ans.equals("4")){
+        System.out.println("Please enter the module code");
+        String moduleCode = scanner.nextLine();
+        viewModuleTimetable(moduleCode);
+    }
+    else if(ans.equals("5")){
+        System.out.println("Please enter the room code");
+        String roomCode = scanner.nextLine();
+        viewRoomTimetable(roomCode);
     }
 
     }
+
+    }
+
 
 
 
