@@ -1,8 +1,10 @@
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class AdminView extends View {
     private Scanner scanner;
-    UserController userController;
+    AdminController adminController;
     String AdminGroup;
 
     /**
@@ -21,107 +23,102 @@ public class AdminView extends View {
      *
      */
     public void start() {
-        System.out.println("1. Create user");
-        System.out.println("2. Remove user");
-        System.out.println("3. Create Student group");
-        System.out.println("4. Remove Student group");
-        System.out.println("5. Add module");
-        System.out.println("6. Remove module");
-        System.out.println("7. Assign lecturer to module");
-        System.out.println("8. Remove lecturer from module");
+        System.out.println("1. Add session");
+        System.out.println("2. Remove session");
+        System.out.println("3. View programme timetable");
+        System.out.println("4. View module timetable");
+        System.out.println("5. View room timetable");
+
 
         String ans = scanner.nextLine();
-        if (ans.equals("1")) {
-            System.out.println("Enter userId:");
-            String userId = scanner.nextLine();
-            System.out.println("Enter name:");
-            String name = scanner.nextLine();
-            System.out.println("Enter password:");
-            String password = scanner.nextLine();
-            System.out.println("Enter user type (ADMIN/STUDENT/LECTURER):");
-            UserType type = UserType.valueOf(scanner.nextLine().toUpperCase());
-            System.out.println("Enter linkedId:");
-            String linkedId = scanner.nextLine();
-            if (adminController.createUser(userId, name, password, type, linkedId)) {
-                System.out.println("User created successfully.");
-            } else {
-                System.out.println("Failed to create user.");
-            }
-        } else if (ans.equals("2")) {
-            System.out.println("Enter userId to remove:");
-            String userId = scanner.nextLine();
-            if (adminController.removeUser(userId)) {
-                System.out.println("User removed.");
-            } else {
-                System.out.println("User not found.");
-            }
-        } else if (ans.equals("3")) {
-            System.out.println("Enter Student groupId:");
-            String groupId = scanner.nextLine();
-            System.out.println("Enter subject:");
-            Subjects subject = new Subjects(scanner.nextLine());
-            System.out.println("Enter subject year:");
-            SubjectsYear subjectYear = new SubjectsYear(scanner.nextLine());
-            System.out.println("Enter number of students:");
-            int noOfStudents = Integer.parseInt(scanner.nextLine());
-            if (adminController.createGroup(groupId, subject, subjectYear, noOfStudents)) {
-                System.out.println("Group created successfully.");
-            } else {
-                System.out.println("Group already exists.");
-            }
-        } else if (ans.equals("4")) {
-            System.out.println("Enter groupId to remove:");
-            String groupId = scanner.nextLine();
-            adminController.removeGroup(groupId);
-            System.out.println("Group removed.");
+        if (ans.equals("9")) {
+            System.out.println("Enter sessionId:");
+            String sessionId = scanner.nextLine();
+            System.out.println("Enter session type:");
+            SessionType type = SessionType.valeuOf(scanner.nextLine());
 
+            System.out.println("Enter module code:");
+            String moduleCode = scanner.nextLine();
+            Module module = adminController.getManager().getModuleById(moduleCode);
 
-        }
-        else if (ans.equals("5")) {
-            System.out.println("Enter module code:");
-            String code = scanner.nextLine();
-            System.out.println("Enter module name:");
-            String name = scanner.nextLine();
-            Module module = new Module(code, name);
-            if (adminController.addModule(module)) {
-                System.out.println("Module added.");
-            }
-        }
-        else if (ans.equals("6")) {
-            System.out.println("Enter module code to remove:");
-            String code = scanner.nextLine();
-            if (adminController.removeModule(code)) {
-                System.out.println("Module removed.");
-            } else {
-                System.out.println("Module not found.");
-            }
-        }
-        else if (ans.equals("7")) {
-            System.out.println("Enter module code:");
-            String code = scanner.nextLine();
+            System.out.println("Enter room code:");
+            String roomCode = scanner.nextLine();
+            Room room = adminController.getManager().getRoomById(roomCode);
+
+            System.out.println("Enter day:");
+            String day = scanner.nextLine();
+            DayOfWeek dayOfWeek = DayOfWeek.valueOf(day);
+
+            System.out.println("Enter time:");
+            String time = scanner.nextLine();
+            LocalTime localTime = LocalTime.parse(time);
+
+            System.out.println("Enter groupId:");
+            String groupId = scanner.nextLine();
+            StudentGroup group = adminController.getManager().getGroupById(groupId);
+
             System.out.println("Enter lecturerId:");
             String lecturerId = scanner.nextLine();
-            System.out.println("Enter lecturer name:");
-            String name = scanner.nextLine();
-            Lecturer lecturer = new Lecturer(lecturerId, name);
-            if (adminController.assignLecturer(code, lecturer)) {
-                System.out.println("Lecturer assigned.");
+            Lecturer lecturer = adminController.getManager().getLecturerById(lecturerId);
+
+            System.out.println("Enter the duration of session in minutes:");
+            int duration = Integer.parseInt(scanner.nextLine());
+            System.out.println("Enter the semester number:");
+            int semester = Integer.parseInt(scanner.nextLine());
+
+            Session session = new Session(sessionId, type, module, room, lecturer, group, dayOfWeek, localTime, duration, semester);
+
+            if (adminController.addSession(session)) {
+                System.out.println("Session added.");
             } else {
-                System.out.println("Failed to assign lecturer.");
+                System.out.println("Failed to add session.");
             }
         }
-        else if (ans.equals("8")) {
+
+        else if (ans.equals("10")) {
+            System.out.println("Enter sessionId:");
+            String sessionId = scanner.nextLine();
+            System.out.println("Enter session type:");
+            SessionType type = SessionType.valeuOf(scanner.nextLine());
+
             System.out.println("Enter module code:");
-            String code = scanner.nextLine();
+            String moduleCode = scanner.nextLine();
+            Module module = adminController.getManager().getModuleById(moduleCode);
+
+            System.out.println("Enter room code:");
+            String roomCode = scanner.nextLine();
+            Room room = adminController.getManager().getRoomById(roomCode);
+
+            System.out.println("Enter day:");
+            String day = scanner.nextLine();
+            DayOfWeek dayOfWeek = DayOfWeek.valueOf(day);
+
+            System.out.println("Enter time:");
+            String time = scanner.nextLine();
+            LocalTime localTime = LocalTime.parse(time);
+
+            System.out.println("Enter groupId:");
+            String groupId = scanner.nextLine();
+            StudentGroup group = adminController.getManager().getGroupById(groupId);
+
             System.out.println("Enter lecturerId:");
             String lecturerId = scanner.nextLine();
-            Lecturer lecturer = new Lecturer(lecturerId, "");
-            if (adminController.removeLecturer(code, lecturer)) {
-                System.out.println("Lecturer removed.");
+            Lecturer lecturer = adminController.getManager().getLecturerById(lecturerId);
+
+            System.out.println("Enter the duration of session in minutes:");
+            int duration = Integer.parseInt(scanner.nextLine());
+            System.out.println("Enter the semester number:");
+            int semester = Integer.parseInt(scanner.nextLine());
+
+            Session session = new Session(sessionId, type, module, room, lecturer, group, dayOfWeek, localTime, duration, semester);
+
+            if (adminController.removeSession(session)) {
+                System.out.println("Session removed.");
             } else {
-                System.out.println("Failed to remove lecturer.");
+                System.out.println("Failed to remove session.");
             }
         }
+
     }
 
     }
