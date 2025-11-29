@@ -12,10 +12,12 @@ public class AdminView extends View {
      *
      * @param controller used to manage users, groups and modules
      */
-    public AdminView(AdminController controller) {
+    public AdminView(TimetableController timetableController, AdminController controller) {
+         super(timetableController);
+         this.adminController = controller;
         this.scanner = new Scanner(System.in);
-        super(controller);
-        this.adminController = controller;
+      
+       
     }
 
     /**
@@ -122,5 +124,6 @@ public class AdminView extends View {
     }
 
     }
+
 
 
