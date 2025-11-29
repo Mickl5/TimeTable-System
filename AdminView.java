@@ -13,11 +13,9 @@ public class AdminView extends View {
      * @param controller used to manage users, groups and modules
      */
     public AdminView(TimetableController timetableController, AdminController controller) {
-         super(timetableController);
-         this.adminController = controller;
+        super(timetableController);
+        this.adminController = controller;
         this.scanner = new Scanner(System.in);
-      
-       
     }
 
     /**
@@ -37,18 +35,18 @@ public class AdminView extends View {
             System.out.println("Enter sessionId:");
             String sessionId = scanner.nextLine();
             System.out.println("Enter session type:");
-            SessionType type = SessionType.valeuOf(scanner.nextLine());
+            SessionType type = SessionType.valueOf(scanner.nextLine().toUpperCase());
 
             System.out.println("Enter module code:");
             String moduleCode = scanner.nextLine();
-            Module module = adminController.getManager().getModuleById(moduleCode);
+            Module module = adminController.getManager().getModuleById(moduleCode.toUpperCase());
 
             System.out.println("Enter room code:");
             String roomCode = scanner.nextLine();
-            Room room = adminController.getManager().getRoomById(roomCode);
+            Room room = adminController.getManager().getRoomById(roomCode.toUpperCase());
 
             System.out.println("Enter day:");
-            String day = scanner.nextLine();
+            String day = scanner.nextLine().toUpperCase();
             DayOfWeek dayOfWeek = DayOfWeek.valueOf(day);
 
             System.out.println("Enter time:");
@@ -120,27 +118,24 @@ public class AdminView extends View {
                 System.out.println("Failed to remove session.");
             }
         }
-         else if (ans.equals("3")){
-        System.out.println("Please enter the subject code");
-        String subjectCode = scanner.nextLine();
-        viewSubjectTimetable(subjectCode);
-    }
-   else if (ans.equals("4")){
-        System.out.println("Please enter the module code");
-        String moduleCode = scanner.nextLine();
-        viewModuleTimetable(moduleCode);
-    }
-    else if(ans.equals("5")){
-        System.out.println("Please enter the room code");
-        String roomCode = scanner.nextLine();
-        viewRoomTimetable(roomCode);
-    }
+
+        else if (ans.equals("3")){
+            System.out.println("Please enter the subject code");
+            String subjectCode = scanner.nextLine();
+            viewSubjectTimetable(subjectCode);
+        }
+        else if (ans.equals("4")){
+            System.out.println("Please enter the module code");
+            String moduleCode = scanner.nextLine();
+            viewModuleTimetable(moduleCode);
+        }
+        else if(ans.equals("5")){
+            System.out.println("Please enter the room code");
+            String roomCode = scanner.nextLine();
+            viewRoomTimetable(roomCode);
+        }
 
     }
 
     }
-
-
-
-
 

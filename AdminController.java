@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -139,6 +140,7 @@ public class AdminController extends Controller {
     public boolean addSession(Session session) {
         if (session == null) return false;
         getManager().getTimetable().addSession(session);
+        saveTimetable();
         return true;
     }
 
@@ -150,6 +152,7 @@ public class AdminController extends Controller {
     public boolean removeSession(Session session) {
         if (session == null) return false;
         getManager().getTimetable().removeSession(session);
+        saveTimetable();
         return true;
     }
 
@@ -181,7 +184,7 @@ public class AdminController extends Controller {
         try {
             getManager().saveModule("studentGroup - Sheet1.csv");
         } catch (Exception e) {
-            System.err.println("Failed to save modules: " + e.getMessage());
+            System.out.println("Failed to save modules: " + e.getMessage());
         }
     }
 
@@ -192,7 +195,15 @@ public class AdminController extends Controller {
         try {
             getManager().saveGroups("studentGroup - Sheet1.csv");
         } catch (Exception e) {
-            System.err.println("Failed to save student groups: " + e.getMessage());
+            System.out.println("Failed to save student groups: " + e.getMessage());
+        }
+    }
+
+    private void saveTimetable() {
+        try{
+            getManager().saveTimetable("src/Timetable - Output.csv");
+        } catch (IOException e) {
+            System.out.println("Failed to save timetable: " + e.getMessage());
         }
     }
 }
