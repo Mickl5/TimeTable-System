@@ -17,12 +17,15 @@ public class SubjectsYear {
         this.semester1Modules = new ArrayList<>();
         this.semester2Modules = new ArrayList<>();
     }
-
+/**
+     * Returns the academic year number.
+     *
+     */
     public int getYearNumber() {
         return this.Year;
     }
     /**
-    *
+    *Gives the selected modules in the requested semester
     *
     */
 
@@ -35,6 +38,8 @@ public class SubjectsYear {
         }
     }
 }
+
+
 
 
 
