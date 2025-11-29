@@ -132,6 +132,28 @@ public class AdminController extends Controller {
     }
 
     /**
+     * adds a session to the timetable thats been created
+     * @param session session to be added
+     * @return false if no session to add, true if been added
+     */
+    public boolean addSession(Session session) {
+        if (session == null) return false;
+        getManager().getTimetable().addSession(session);
+        return true;
+    }
+
+    /**
+     * removes a session from the existing timetable
+     * @param session session to be removed
+     * @return true if removed, else false
+     */
+    public boolean removeSession(Session session) {
+        if (session == null) return false;
+        getManager().getTimetable().removeSession(session);
+        return true;
+    }
+
+    /**
      * Finds a module by its code.
      */
     private Module getModule(String code) {
