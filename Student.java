@@ -1,4 +1,4 @@
-public class Student extends User {
+/*public class Student extends User {
 
     private String classes;
     private String courseCode;
@@ -21,3 +21,4 @@ public class Student extends User {
     public void setCourseCode(String courseCode) {}
 
 }
+*/
