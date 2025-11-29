@@ -6,6 +6,7 @@ import java.util.List;
 public class AdminController extends Controller {
     private final String moduleCsvFile;
 
+
     /**
      * Constructs an AdminController with the CSVDataManager and module CSV path.
      * @param manager       the CSV data manager
@@ -41,6 +42,38 @@ public class AdminController extends Controller {
             }
         }
         return false;
+    }
+
+    /**
+     * Creates a new student group and adds it to the system.
+     * @param groupId       the ID of the group
+     * @param subject       the subject the group is for
+     * @param subjectYear   the year of the subject
+     * @param noOfStudents  number of students in the group
+     * @return true if the group was successfully added, false if a group with the same ID already exists
+     */
+    public boolean createGroup(String groupId, Subjects subject, SubjectsYear subjectYear, int noOfStudents) {
+        if (getManager().getGroupById(groupId) != null) {
+            return false;
+        }
+
+        StudentGroup newGroup = new StudentGroup(groupId, subject, subjectYear, noOfStudents);
+        getManager().getGroups().add(newGroup);
+
+        saveGroups();
+        return true;
+    }
+
+    public void removeGroup(String groupId) {
+        StudentController studentController = new StudentController(getManager());
+        studentController.deleteGroup(groupId);
+        saveGroups();
+    }
+
+    public void addSubGroup(String parentId, StudentGroup group) {
+        StudentController studentController = new StudentController(getManager());
+        studentController.addSubGroup(parentId, group);
+        saveGroups();
     }
 
     /**
@@ -132,6 +165,18 @@ public class AdminController extends Controller {
             getManager().saveModule(moduleCsvFile);
         } catch (Exception e) {
             System.err.println("Failed to save modules: " + e.getMessage());
+        }
+    }
+
+    /**
+     * saves all groups to the CSV
+     * @return
+     */
+    private void saveGroups() {
+        try {
+            getManager().saveGroups("studentGroups.csv");
+        } catch (Exception e) {
+            System.err.println("Failed to save student groups: " + e.getMessage());
         }
     }
 }
