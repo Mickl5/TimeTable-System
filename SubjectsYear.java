@@ -1,9 +1,16 @@
 import java.util.ArrayList;
-
+/**
+*this class gives the module offering for the specific semester
+*
+*/
 public class SubjectsYear {
     private int Year;
     ArrayList<ModuleOffering> semester1Modules;
     ArrayList<ModuleOffering> semester2Modules;
+    /**
+    *sets the year and creates 2 empty lists for the semester 1 ans 2 modules
+    *
+    */
 
     public SubjectsYear(int Year) {
         this.Year = Year;
@@ -14,6 +21,10 @@ public class SubjectsYear {
     public int getYearNumber() {
         return this.Year;
     }
+    /**
+    *
+    *
+    */
 
     public ArrayList<ModuleOffering> getModulesForSemester(int semester) {
         if (semester == 1) {
@@ -24,6 +35,7 @@ public class SubjectsYear {
         }
     }
 }
+
 
 
 
