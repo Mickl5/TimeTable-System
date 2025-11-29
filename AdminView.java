@@ -81,7 +81,7 @@ public class AdminView extends View {
             System.out.println("Enter sessionId:");
             String sessionId = scanner.nextLine();
             System.out.println("Enter session type:");
-            SessionType type = SessionType.valeuOf(scanner.nextLine());
+            SessionType type = SessionType.valueOf(scanner.nextLine());
 
             System.out.println("Enter module code:");
             String moduleCode = scanner.nextLine();
@@ -124,6 +124,7 @@ public class AdminView extends View {
     }
 
     }
+
 
 
 
