@@ -21,6 +21,12 @@ public class TimetableController extends Controller {
             if (session.getLecturer().equals(lecturer)) {
                 timetable.addSession(session);
             }
+            if(!session.getGroup().getSubGroups().isEmpty()){
+            for(StudentGroup group : session.getGroup().getSubGroups()){
+                if(group.equals(studentGroup)){
+                    timetable.addSession(session);
+                }
+            }
         }
         return timetable;
     }
@@ -87,3 +93,4 @@ public class TimetableController extends Controller {
         return timetable;
     }
 }
+
