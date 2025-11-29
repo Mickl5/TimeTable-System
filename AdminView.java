@@ -31,7 +31,7 @@ public class AdminView extends View {
 
 
         String ans = scanner.nextLine();
-        if (ans.equals("9")) {
+        if (ans.equals("1")) {
             System.out.println("Enter sessionId:");
             String sessionId = scanner.nextLine();
             System.out.println("Enter session type:");
@@ -75,7 +75,7 @@ public class AdminView extends View {
             }
         }
 
-        else if (ans.equals("10")) {
+        else if (ans.equals("2")) {
             System.out.println("Enter sessionId:");
             String sessionId = scanner.nextLine();
             System.out.println("Enter session type:");
@@ -122,4 +122,5 @@ public class AdminView extends View {
     }
 
     }
+
 
