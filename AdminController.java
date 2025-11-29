@@ -4,17 +4,12 @@ import java.util.List;
  * Admin controller that allows managing users and modules.
  */
 public class AdminController extends Controller {
-    private final String moduleCsvFile;
-
-
     /**
      * Constructs an AdminController with the CSVDataManager and module CSV path.
-     * @param manager       the CSV data manager
-     * @param moduleCsvFile path to the CSV file for modules
+     * @param manager the CSV data manager
      */
     public AdminController(CSVDataManager manager, String moduleCsvFile) {
         super(manager);
-        this.moduleCsvFile = moduleCsvFile;
     }
 
     /**
@@ -151,7 +146,7 @@ public class AdminController extends Controller {
      */
     private void saveUsers() {
         try {
-            getManager().saveUsers("users.csv"); // adjust path as needed
+            getManager().saveUsers("User - Sheet1.csv");
         } catch (Exception e) {
             System.err.println("Failed to save users: " + e.getMessage());
         }
@@ -162,7 +157,7 @@ public class AdminController extends Controller {
      */
     private void saveModules() {
         try {
-            getManager().saveModule(moduleCsvFile);
+            getManager().saveModule("studentGroup - Sheet1.csv");
         } catch (Exception e) {
             System.err.println("Failed to save modules: " + e.getMessage());
         }
@@ -170,11 +165,10 @@ public class AdminController extends Controller {
 
     /**
      * saves all groups to the CSV
-     * @return
      */
     private void saveGroups() {
         try {
-            getManager().saveGroups("studentGroups.csv");
+            getManager().saveGroups("studentGroup - Sheet1.csv");
         } catch (Exception e) {
             System.err.println("Failed to save student groups: " + e.getMessage());
         }
