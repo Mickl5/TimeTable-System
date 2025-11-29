@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class lecturerView  extends View{
     private Scanner scanner;
     UserController userController;
-    String lectureGroup;
+    String lectureId;
 
     /**
      * creates a lecvturer view
@@ -20,8 +20,7 @@ public class lecturerView  extends View{
         super(controller);
         this.scanner= new Scanner(System.in);
         this.userController = userController;
-        lecturerGroup=userController.getCurrentUser().getLinkedId();
-
+        
     }
     /**
      * shows the timtable for logged in lecturer
@@ -30,7 +29,7 @@ public class lecturerView  extends View{
     
     public void viewMytimetable(){
 
-    printTimetable(getController().getTimetableForLecturer(this.lecturerGroup).getSessions());
+    printTimetable(getController().getTimetableForLecturer(this.lecturerId).getSessions());
     
 
     /**
@@ -38,6 +37,8 @@ public class lecturerView  extends View{
      * 
      */
     public void start(){
+        lecturerId=userController.getCurrentUser().getLinkedId();
+
         System.out.println("1. View my timetable");
         System.out.println("2. View programme timetable");
         System.out.println("3. View module timetable");
@@ -67,4 +68,5 @@ public class lecturerView  extends View{
 
 }
 }
+
 
