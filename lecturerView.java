@@ -1,10 +1,20 @@
 import java.util.Scanner;
+/**
+ * lets the lecturers view their timetamble
+ *
+ */
+
 
 public class lecturerView  extends View{
     private Scanner scanner;
     UserController userController;
     String studentGroup;
 
+    /**
+     * creates a lecvturer view
+     * @param controller used to get timetable info
+     * @param userController used to find out which user is logged in
+     */
     public lecturerView(TimetableController controller,UserController userController){
         this.scanner= new Scanner(System.in);
         super(controller);
@@ -12,10 +22,20 @@ public class lecturerView  extends View{
         lecturerGroup=userController.getCurrentUser().getLinked();
 
     }
+    /**
+     * shows the timtable for logged in lecturer
+     *
+     */
+    
     public void viewMytimetable(){
 
     printTimetable(getController().getTimetableForLecturer(this.lecturerGroup).getSessions());
     }
+
+    /**
+     * shows a menu that lets lecturers choose what timetable to view
+     * 
+     */
     public void start(){
         System.out.println("1. View my timetable");
         System.out.println("2. View programme timetable");
