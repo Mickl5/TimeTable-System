@@ -1,10 +1,16 @@
 import java.util.ArrayList;
-
+/**
+*The subjects name ,code and year
+*
+    */
 public class Subjects {
     private String Name;
     private String Code;
     private ArrayList<SubjectsYear> years;
-
+/**
+    *the code and name
+    *
+    */
     public Subjects(String Code, String Name){
         this.Name=Name;
         this.Code=Code;
@@ -39,5 +45,6 @@ public class Subjects {
 
 
 }
+
 
 
