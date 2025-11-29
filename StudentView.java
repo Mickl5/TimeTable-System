@@ -17,7 +17,6 @@ public class StudentView extends View {
         super(controller);
         this.userController = userController;
         this.scanner = new Scanner(System.in);
-        studentGroup = userController.getCurrentUser().getLinkedId();
     }
 
     /**
@@ -32,6 +31,7 @@ public class StudentView extends View {
      * asks for extra info if needed
      */
     public void start(){
+        studentGroup = userController.getCurrentUser().getLinkedId();
         System.out.println("1) View my timetable");
         System.out.println("2) View programme timetable");
         System.out.println("3) View module timetable");
@@ -59,3 +59,4 @@ public class StudentView extends View {
         }
     }
 }
+
