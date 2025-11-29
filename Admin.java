@@ -1,4 +1,4 @@
-public class Admin extends User{
+/*public class Admin extends User{
     private String sysAdmin;
 
   public Admin(String userId, String name, String password, String sysAdmin) {
@@ -10,4 +10,5 @@ public class Admin extends User{
     return sysAdmin;
   }
   public void setSysAdmin(String sysAdmin) {}
-}
+}*/
+
