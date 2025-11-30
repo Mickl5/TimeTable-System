@@ -21,7 +21,7 @@ MA4413,Statistics for Computing,2,1,1,GENERALLAB
 CS4457,Project Management and Practice,2,1,1,GENERALLAB
 CS4187,Professional Issues in Computing,2,0,4,GENERALLAB
 CS4084,Mobile Application Development,1,2,0,CSLAB
-CS4116,Software Development Project,1.25,2,1,CSLAB
+CS4116,Software Development Project,1,2,1,CSLAB
 CS4106,Machine Learning: Methods and Application,2,0,1,CSLAB
 CS4617,Computer Systems Project 1,1,0,0,CSLAB
 CS4125,Systems Analysis and Design,2,1,1,SCIENCELAB
@@ -48,5 +48,6 @@ CS4297,Applied System Design,2,1,1,CSLAB
 CS6361,Language Engineering and Translation Technology,2,1,0,GENERALLAB
 CS4938,AI Project 1,1,0,0,CSLAB
 CS4135,Software Design and Architecture ,2,1,1,CSLAB
-CS4108,"AI Culture-Themes, Ideas, Debates ",2,0,0,GENERALLAB
+CS4108,"AI Culture-Themes Ideas Debates ",2,0,0,GENERALLAB
 CS4469,Ai Project 2 ,1,0,0,CSLAB
+
