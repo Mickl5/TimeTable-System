@@ -1,8 +1,18 @@
-CSG001,Computer Science Lecture Hall 1,CLASSROOM,250
-CSG027,Computer Science Lecture Hall 2,CLASSROOM,35
+CSG001,Computer Science Lecture Hall 1,CLASSROOM,200
+CSG027,Computer Science Classroom 1,CLASSROOM,35
+CSG028,Computer Science Classroom 2,CLASSROOM,35
+CSG029,Computer Science Classroom 3,CLASSROOM,35
 CS1044,Computer Science Lab 1,CSLAB,35
 CS2044,Computer Science Lab 2,CSLAB,40
-CS3005b,Computer Science Lab 3,CSLAB,30
-KBG12,Business School Lecture Hall1,CLASSROOM,500
-D2005,Computer Science Lab 4,GENERALLAB,30
-D3010,Computer Science Lab 5,SCIENCELAB,30
+CS3004a,Computer Science Lab 3,CSLAB,30
+CS3004b,Computer Science Lab 4,CSLAB,30
+KBG12,Business School Lecture Hall1,CLASSROOM,200
+KBG13,Business School Lecture Hall2,CLASSROOM,200
+KBG14,Business School Lecture Hall3,CLASSROOM,200
+D2005,General Lab 1,GENERALLAB,30
+D2006,General Lab 2,GENERALLAB,30
+D2007,General Lab 3,GENERALLAB,30
+D3010,Science Lab 1,SCIENCELAB,30
+D3011,Science Lab 2,SCIENCELAB,30
+D3012,Science Lab 3,SCIENCELAB,30
+D3013,Science Lab 4,SCIENCELAB,30
