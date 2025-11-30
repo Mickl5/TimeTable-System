@@ -14,12 +14,14 @@ public class TimetableController extends Controller {
      * @param lecturerID the lecturer to be searchd for
      * @return a timetable object containing all the sessions with the specified arguments
      */
-    public Timetable getTimetableForLecturer(String lecturerID) {
+    public Timetable getTimetableForLecturer(String lecturerID, int yearNumber, int semesterNumber) {
         Timetable timetable = new Timetable();
         Lecturer lecturer = getManager().getLecturerById(lecturerID);
         for (Session session : getManager().getTimetable().getSessions()) {
-            if (session.getLecturer().equals(lecturer)) {
-                timetable.addSession(session);
+            SubjectsYear year = session.getGroup().getSubject().getYear(yearNumber);
+            if(year == null) continue;
+            if (session.getLecturer().equals(lecturer) && session.getSemesterNumber() == semesterNumber && session.getGroup().getSubjectYear().equals(year)) {
+                timetable.addSessionIgnoresConflicts(session);
             }
         }
         return timetable;
@@ -30,17 +32,17 @@ public class TimetableController extends Controller {
      * @param groupID the student group to be searched for
      * @return a timetable object containing all the sessions with the specified arguments
      */
-    public Timetable getTimetableForStudent(String groupID) {
+    public Timetable getTimetableForStudent(String groupID, int semesterNumber) {
         Timetable timetable = new Timetable();
         StudentGroup studentGroup = getManager().getGroupById(groupID);
         for (Session session : getManager().getTimetable().getSessions()) {
-            if (session.getGroup().equals(studentGroup)) {
-                timetable.addSession(session);
+            if (session.getGroup().equals(studentGroup) && session.getSemesterNumber() == semesterNumber) {
+                timetable.addSessionIgnoresConflicts(session);
             }
-            if (!session.getGroup().getSubGroups().isEmpty()) {
+            if (!session.getGroup().getSubGroups().isEmpty() && session.getSemesterNumber() == semesterNumber) {
                 for (StudentGroup group : session.getGroup().getSubGroups()) {
                     if (group.equals(studentGroup)) {
-                        timetable.addSession(session);
+                        timetable.addSessionIgnoresConflicts(session);
                     }
                 }
             }
@@ -50,15 +52,20 @@ public class TimetableController extends Controller {
 
     /**
      * gets the timetable for a specific room
-     * @param roomID the room to be searched for
+     * @param roomCode the room to be searched for
+     * @param yearNumber the year to be searched for
+     * @param semesterNumber the semester to be searched for
      * @return a timetable object containing all the sessions with the specified arguments
      */
-    public Timetable getTimetableForRoom(String roomID) {
+    public Timetable getTimetableForRoom(String roomCode,int yearNumber,int semesterNumber) {
         Timetable timetable = new Timetable();
-        Room room = getManager().getRoomById(roomID);
+        Room room = getManager().getRoomById(roomCode);
+        if(room == null) return null;
         for (Session session : getManager().getTimetable().getSessions()) {
-            if (session.getRoom().equals(room)) {
-                timetable.addSession(session);
+            SubjectsYear year = session.getGroup().getSubject().getYear(yearNumber);
+            if(year == null) continue;
+            if (session.getRoom().equals(room) && session.getGroup().getSubjectYear().equals(year) && session.getSemesterNumber() == semesterNumber) {
+                timetable.addSessionIgnoresConflicts(session);
             }
         }
         return timetable;

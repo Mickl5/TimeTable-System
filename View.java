@@ -54,8 +54,10 @@ public class View {
      * Method to view the timetable for a room
      * @param roomCode the room
      * */
-    public boolean viewRoomTimetable(String roomCode) {
-        ArrayList<Session> list = controller.getTimetableForRoom(roomCode).getSessions();
+    public boolean viewRoomTimetable(String roomCode, int yearNumber, int semesterNumber) {
+        Timetable timetable = controller.getTimetableForRoom(roomCode,yearNumber,semesterNumber);
+        if (timetable == null) return false;
+        ArrayList<Session> list = timetable.getSessions();
         if(list.isEmpty()) {
             return false;
         }

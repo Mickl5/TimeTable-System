@@ -25,7 +25,22 @@ public class StudentView extends View {
      * shows the timetable for the logged in student
      */
     public void viewMytimetable() {
-        printTimetable(getController().getTimetableForStudent(this.studentGroup).getSessions());
+        boolean valid = false;
+        int semesterNumber = 0;
+
+        while (!valid) {
+            System.out.println("Enter the semester number:");
+            String semester = scanner.nextLine();
+
+            try {
+                semesterNumber = Integer.parseInt(semester);
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid integer. Please insert a number");
+            }
+        }
+
+        printTimetable(getController().getTimetableForStudent(this.studentGroup, semesterNumber).getSessions());
     }
 
     /**
@@ -106,7 +121,38 @@ public class StudentView extends View {
                 while (running) {
                     System.out.println("Please enter the room code");
                     String roomCode = scanner.nextLine().toUpperCase();
-                    if(!viewRoomTimetable(roomCode)) {
+
+                    boolean valid = false;
+                    int yearNumber = 0;
+
+                    while (!valid) {
+                        System.out.println("Please enter the year number");
+                        String time = scanner.nextLine();
+
+                        try {
+                            yearNumber = Integer.parseInt(time);
+                            valid = true;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid integer. Please insert a number");
+                        }
+                    }
+
+                    valid = false;
+                    int semesterNumber = 0;
+
+                    while (!valid) {
+                        System.out.println("Enter the semester number:");
+                        String semester = scanner.nextLine();
+
+                        try {
+                            semesterNumber = Integer.parseInt(semester);
+                            valid = true;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid integer. Please insert a number");
+                        }
+                    }
+
+                    if(!viewRoomTimetable(roomCode, yearNumber, semesterNumber)){
                         System.out.println("Invalid room code");
                     }
                     else {
