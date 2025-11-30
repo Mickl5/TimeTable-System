@@ -14,7 +14,7 @@ public class LecturerController extends Controller{
 
 
     /**Adds a lecturer to the controllers list
-     *@param Lecturer the lecturer to be added */
+     *@param lecturer the lecturer to be added */
     public void addLecturer(Lecturer lecturer) {
         getManager().getLecturers().add(lecturer);
     }
@@ -34,7 +34,7 @@ public class LecturerController extends Controller{
     }
 
     /**Finds a lecturer using their unique ID
-     *@param Id the ID of the lecturer being found e.g(CS4114)
+     *@param id the ID of the lecturer being found e.g(CS4114)
      *@return the lecturer if their found or null if no lecturer matches*/
     public Lecturer getLecturer(String id) {
         for (Lecturer lecturer : getManager().getLecturers()) {
@@ -44,4 +44,5 @@ public class LecturerController extends Controller{
         }
         return null;
     }
+
 }
