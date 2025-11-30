@@ -1,0 +1,3 @@
+public enum SessionType {
+    LECTURE,GENERALLAB,TUTORIAL,CSLAB,SCIENCELAB
+}
