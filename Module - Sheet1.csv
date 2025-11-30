@@ -3,6 +3,50 @@ MS4111,Discrete Maths 1,2,2,0,GENERALLAB
 CS4221,Foundations of Computer Science 1,2,0,2,CSLAB
 ET4011,Fundamentals of Computer Organisation,2,1,1,SCIENCELAB
 CS4141,Introduction to Programming,2,1,2,CSLAB
-MS4021,Calculus 1,2,2,0,GENERALLAB
-MS4131,Linear Algebra 1,2,2,0,GENERALLAB
-CS4171,Programming For Artificial Intelligence,2,2,2,CSLAB
+CS4043,Games Modelling Design,2,1,0,CSLAB
+CS4222,Software Development,2,2,0,CSLAB
+CS4182,Foundations of Computer Science 2,2,1,1,CSLAB
+ET4162,Computing Systems Organisation,2,2,2,GENERALLAB
+MA4402,Computer Maths 2,2,0,1,GENERALLAB
+CS4013,Object Oriented Development,2,2,1,CSLAB
+CS4023,Operating Systems,2,1,1,CSLAB
+CS4416,Database Systems,2,1,1,CSLAB
+CS4004,Software Testing and Inspection,2,1,1,CSLAB
+CS4178,Software Requirements and Modelling,2,2,0,GENERALLAB
+CS4006,Intelligent Systems,2,1,1,SCIENCELAB
+CS4076,Event Driven Programing,2,2,0,GENERALLAB
+CS4115,Data Structures and Algorithms,2,1,1,CSLAB
+CS4815,Computer Graphics,2,1,1,CSLAB
+MA4413,Statistics for Computing,2,1,1,GENERALLAB
+CS4457,Project Management and Practice,2,1,1,GENERALLAB
+CS4187,Professional Issues in Computing,2,0,4,GENERALLAB
+CS4084,Mobile Application Development,1,2,0,CSLAB
+CS4116,Software Development Project,1.25,2,1,CSLAB
+CS4106,Machine Learning: Methods and Application,2,0,1,CSLAB
+CS4617,Computer Systems Project 1,1,0,0,CSLAB
+CS4125,Systems Analysis and Design,2,1,1,SCIENCELAB
+CS4207,Advanced Programming Concepts and Practices,2,2,0,GENERALLAB
+CS4337,Big Data Management and Security,2,2,0,GENERALLAB
+CS4287,Neural Computing,2,2,0,CSLAB
+CS4618,Computer Systems Project 2 (Double Weighted) ,1,0,0,GENERALLAB
+CS4227,Software Design and Architecture ,2,1,1,CSLAB
+CS4158,Programming Language Technology ,4,1,0,GENERALLAB
+CS4168,Data Mining ,2,2,0,CSLAB
+CS4171,Programming for Artificial Intelligence,2,2,0,CSLAB
+MS4021,Calculus 1,3,0,1,GENERALLAB
+MS4131,Linear Algebra 1,3,0,1,GENERALLAB
+CS4242,Machine Learning for Interactive Systems ,1,2,2,CSLAB
+MS4022,Calculus 2 ,3,0,1,GENERALLAB
+MS4122,Further Linear Algebra,3,0,1,GENERALLAB
+CS4096,Artificial Intelligence for Games,2,1,0,CSLAB
+MS4613,Vector Analysis,2,0,1,SCIENCELAB
+MA4004,Engineering Mathematics 4,3,0,1,GENERALLAB
+CS4136,Topics in AI (Seminar Series) ,2,0,2,GENERALLAB
+MS4303,Operations Research I,2,0,1,SCIENCELAB
+CS4928,Theory and Practice of Software Design,2,2,0,CSLAB
+CS4297,Applied System Design,2,1,1,CSLAB
+CS6361,Language Engineering and Translation Technology,2,1,0,GENERALLAB
+CS4938,AI Project 1,1,0,0,CSLAB
+CS4135,Software Design and Architecture ,2,1,1,CSLAB
+CS4108,"AI Culture-Themes, Ideas, Debates ",2,0,0,GENERALLAB
+CS4469,Ai Project 2 ,1,0,0,CSLAB
