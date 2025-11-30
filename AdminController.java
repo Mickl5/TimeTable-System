@@ -141,7 +141,9 @@ public class AdminController extends Controller {
      */
     public boolean addSession(Session session) {
         if (session == null) return false;
-        getManager().getTimetable().addSession(session);
+        if(!getManager().getTimetable().addSession(session)) {
+            System.out.println("The entered session overlaps with an existing one");
+        }
         saveTimetable();
         return true;
     }

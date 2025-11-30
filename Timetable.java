@@ -17,12 +17,12 @@ public class Timetable {
     }
 
     /**Adds a session to the timetable*/
-    public void addSession(Session session){
+    public boolean addSession(Session session){
         if (ConflictChecker.hasConflict(session, getSessions())) {
-            System.out.println("The entered session overlaps an existing session");
-            return;
+            return false;
         }
         sessions.add (session);
+        return true;
     }
 
     /**
