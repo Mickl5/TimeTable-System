@@ -14,18 +14,20 @@ public class StudentGroup {
     private int noOfStudents;
     private List<Session> sessions;
     private List<StudentGroup> subGroups;
+    private String subjectCode;
+    private int yearNumber;
 
     /**
      * creates a student group
      * @param groupId the groups Id
-     * @param subject Subject the group is for
-     * @param subjectYear what year the subject is
+     * @param subjectCode Subject the group is for
+     * @param yearNumber what year the subject is
      * @param noOfStudents amount of students in the group
      */
-    public StudentGroup(String groupId, Subjects subject, SubjectsYear subjectYear, int noOfStudents) {
+    public StudentGroup(String groupId, String subjectCode, int yearNumber, int noOfStudents) {
         this.groupId = groupId;
-        this.subject = subject;
-        this.subjectYear = subjectYear;
+        this.subjectCode = subjectCode;
+        this.yearNumber = yearNumber;
         this.noOfStudents = noOfStudents;
         this.sessions = new ArrayList<>();
         this.subGroups = new ArrayList<>();
@@ -93,6 +95,38 @@ public class StudentGroup {
      */
     public List<StudentGroup> getSubGroups() {
         return subGroups;
+    }
+
+    /**
+     * returns the subject code
+     * @return subject code
+     * */
+    public String getSubjectCode() {
+        return this.subjectCode;
+    }
+
+    /**
+     * returns the year number
+     * @return year number
+     * */
+    public int getYearNumber() {
+        return this.yearNumber;
+    }
+
+    /**
+     * sets the subject year
+     * @param year year to be set to
+     * */
+    public void setProgrammeYear(SubjectsYear year) {
+        this.subjectYear = year;
+    }
+
+    /**
+     * sets the subject
+     * @param subject subject to be set to
+     * */
+    public void setProgramme(Subjects subject) {
+        this.subject = subject;
     }
 }
 
