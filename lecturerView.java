@@ -43,7 +43,7 @@ public class lecturerView  extends View{
             System.out.println("2) View programme timetable");
             System.out.println("3) View module timetable");
             System.out.println("4) View room timetable");
-            System.out.println("5) Quit");
+            System.out.println("0) Quit");
 
             String ans = scanner.nextLine();
 
@@ -118,7 +118,7 @@ public class lecturerView  extends View{
                     }
                 }
             }
-            else if(ans.equals("5")) {
+            else if(ans.equals("0")) {
                 this.isRunning = false;
             }
             else {
