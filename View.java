@@ -3,13 +3,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Basic View class for all other classes to inherit from
+ * Provides with methods all views need such as view subject/module/room timetable and formatting and printing the timetable
+ * */
 public class View {
     protected TimetableController controller;
 
+    /**
+     * constructor that initialises the timetable controller
+     * @param controller the timetable controller
+     * */
     public View(TimetableController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Method to view the timetable for a specific subject
+     * @param subjectCode the code of the subject
+     * @param yearNumber the year
+     * @param semesterNumber  the semester
+     * */
     public boolean viewSubjectTimetable(String subjectCode, int yearNumber, int semesterNumber) {
         ArrayList<Session> list = controller.getTimetableForSubject(subjectCode, yearNumber, semesterNumber).getSessions();
         if(list.isEmpty()) {
@@ -20,6 +34,10 @@ public class View {
         return true;
     }
 
+    /**
+     * Method to view the timetable for a specific module
+     * @param moduleCode the module
+     * */
     public boolean viewModuleTimetable(String moduleCode) {
         ArrayList<Session> list = controller.getTimetableForModule(moduleCode).getSessions();
         if(list.isEmpty()) {
@@ -30,6 +48,10 @@ public class View {
         return true;
     }
 
+    /**
+     * Method to view the timetable for a room
+     * @param roomCode the room
+     * */
     public boolean viewRoomTimetable(String roomCode) {
         ArrayList<Session> list = controller.getTimetableForRoom(roomCode).getSessions();
         if(list.isEmpty()) {
@@ -40,6 +62,10 @@ public class View {
         return true;
     }
 
+    /**
+     * Method to print the timetable
+     * @param list a list of all the sessions in a timetable
+     * */
     public void printTimetable(ArrayList<Session> list) {
         Map<DayOfWeek, ArrayList<Session>> byDay = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
@@ -84,6 +110,9 @@ public class View {
         }
     }
 
+    /**
+     * private helper method to sort the sessions by ascending order of time
+     * */
     private static void bubbleSortByTime(ArrayList<Session> list) {
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - i - 1; j++) {
@@ -96,6 +125,10 @@ public class View {
         }
     }
 
+    /**
+     * public getter for subclasses to access the timetable controller
+     * @return the timetable controller
+     * */
     public TimetableController getController() {
         return this.controller;
     }

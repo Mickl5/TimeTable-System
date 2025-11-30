@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * represents a group of students for a specific subject and year.
@@ -12,8 +11,8 @@ public class StudentGroup {
     private Subjects subject;
     private SubjectsYear subjectYear;
     private int noOfStudents;
-    private List<Session> sessions;
-    private List<StudentGroup> subGroups;
+    private ArrayList<Session> sessions;
+    private ArrayList<StudentGroup> subGroups;
     private String subjectCode;
     private int yearNumber;
 
@@ -69,7 +68,7 @@ public class StudentGroup {
      * returns a list off all sessions(lab, lecs, tuts) the group has
      * @return sessions
      */
-    public List<Session> getSessions() {
+    public ArrayList<Session> getSessions() {
         return sessions;
     }
 
@@ -93,7 +92,7 @@ public class StudentGroup {
      * returns a list of subgroups
      * @return sub groups
      */
-    public List<StudentGroup> getSubGroups() {
+    public ArrayList<StudentGroup> getSubGroups() {
         return subGroups;
     }
 

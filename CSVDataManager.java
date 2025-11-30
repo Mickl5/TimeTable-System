@@ -473,6 +473,11 @@ public class CSVDataManager {
         return "";
     }
 
+
+    /**
+     * method to get a parent group by its id
+     * @param parentId the parent id to be searched for
+     * */
     public StudentGroup getParentGroupById(String parentId) {
         for (StudentGroup group : groups) {
             if (group.getGroupId().equals(parentId)) {
@@ -612,35 +617,66 @@ public class CSVDataManager {
     }
 
 
-
+    /**
+     * getter for all the subjects
+     * @return list of all the loaded subjects
+     * */
     public ArrayList<Subjects> getSubjects() {
         return this.subjects;
     }
 
+    /**
+     * getter for all the rooms
+     * @return list of all the loaded rooms
+     * */
     public ArrayList<Room> getRooms() {
         return this.rooms;
     }
 
+    /**
+     * getter for the timetable
+     * @return the timetable
+     * */
     public Timetable getTimetable() {
         return this.timetable;
     }
 
+    /**
+     * sets the timetable to a new one
+     * @param timetable the new timetable to be set to
+     * */
     public void setTimetable(Timetable timetable) {
         this.timetable = timetable;
     }
 
+    /**
+     * getter for all the modules
+     * @return list of all the loaded modules
+     * */
     public ArrayList<Module> getModules() {
         return this.modules;
     }
 
+    /**
+     * getter for all the users
+     * @return list of all the loaded users
+     * */
     public ArrayList<User> getUsers() {
         return this.users;
     }
 
+    /**
+     * getter for all the groups
+     * @return list of all the loaded groups
+     * */
     public ArrayList<StudentGroup> getGroups() {
         return this.groups;
     }
 
+    /**
+     * getter for all the lecturers
+     * @return list of all the loaded lecturers
+     * */
     public ArrayList<Lecturer> getLecturers() {
         return this.lecturers;
     }

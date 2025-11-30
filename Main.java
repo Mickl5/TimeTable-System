@@ -1,8 +1,14 @@
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.Scanner;
 
+/**
+ * Main class that contains the main method to run the app
+ * */
 public class Main {
+    /**
+     * Main method that runs the entire app
+     * Contains all the file paths needed
+     * Initialises all the managers, generators, controllers and the CLIView that will route to other views
+     * */
     public static void main(String[] args) throws IOException {
         String programmeFile = "src/programme - Sheet1.csv";
         String moduleFile = "src/Module - Sheet1.csv";
