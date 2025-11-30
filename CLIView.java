@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Beginning cli view the user always sees whenever the app is launched
+ * */
 public class CLIView extends View{
     private Scanner scanner;
     private UserController controller;
@@ -8,6 +11,14 @@ public class CLIView extends View{
     private AdminView adminView;
     private boolean running;
 
+    /**
+     * public constructor that has the all controllers and views needed to be routed to based on the login
+     * @param timetableController the timetable controller of the view superclass
+     * @param userController the user controller for log in
+     * @param adminView the view the admin sees when logged in
+     * @param studentView the view the student sees when logged in
+     * @param lecturerView the view the lecturer sees when logged in
+     * */
     public CLIView(TimetableController timetableController, UserController userController, StudentView studentView, lecturerView lecturerView, AdminView adminView) {
         super(timetableController);
         this.controller = userController;
@@ -18,6 +29,10 @@ public class CLIView extends View{
         this.running = true;
     }
 
+
+    /**
+     * Start method that's called at the beginning of the app, connects all other aspects of the views
+     * */
     public void Start() {
         while (running) {
             System.out.println("1) Log in");
@@ -123,6 +138,10 @@ public class CLIView extends View{
 
     }
 
+    /**
+     * Method to switch the view based on the user type
+     * @param user the user that has logged in
+     * */
     public void routeUser(User user) {
         switch (user.getType()) {
             case ADMIN:
