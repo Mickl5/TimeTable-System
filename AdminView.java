@@ -154,6 +154,7 @@ public class AdminView extends View {
                 }
 
                 Session session = new Session(sessionId, type, module, room, lecturer, group, dayOfWeek, localTime, duration, semesterNumber);
+                adminController.addSession(session);
             }
 
             else if (ans.equals("2")) {
@@ -351,4 +352,5 @@ public class AdminView extends View {
     }
 
     }
+
 
