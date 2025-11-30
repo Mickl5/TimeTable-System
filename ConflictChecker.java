@@ -1,7 +1,7 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-/* public class ConflictChecker {
+public class ConflictChecker {
     public static boolean hasConflict(Session newSession, ArrayList<Session> existingSessions) {
         for (Session session : existingSessions) {
             if(conflicts(newSession, session)) {
@@ -39,4 +39,4 @@ import java.util.ArrayList;
         if (newSession.getGroup() == null || oldSession.getGroup() == null) return false;
         return newSession.getGroup().getGroupId() == oldSession.getGroup().getGroupId();
     }
-} */
+}
