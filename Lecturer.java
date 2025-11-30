@@ -15,7 +15,7 @@ public class Lecturer  {
      * @param LecturerId the lecturers ID number
      * @param LecturerName the lecturers name
      */
-    public Lecturer(String LecturerId, String LecturerName) {
+    public Lecturer(String LecturerId, String LecturerName, LecturerType type) {
         this.LecturerId = LecturerId;
         this.LecturerName = LecturerName;
         this.sessions = new ArrayList<>();
@@ -72,3 +72,4 @@ public Lecturer(String userId, String name, String password, List<String> Module
     }
     public void setModules(List<String> Modules) {}
 }*/
+
