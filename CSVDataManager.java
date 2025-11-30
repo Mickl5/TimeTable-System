@@ -43,7 +43,7 @@ public class CSVDataManager {
      * @param moduleLecturerFile
      * */
     public void loadAll(String programmeFile, String moduleFile, String studentGroupFile, String programmeStructureFile,
-                        String lecturerFile, String roomFile, String timetableFile, String moduleLecturerFile) throws IOException {
+                        String lecturerFile, String roomFile, String timetableFile, String moduleLecturerFile, String usersFile) throws IOException {
         loadSubject(programmeFile);
         loadModule(moduleFile);
         loadGroups(studentGroupFile);
@@ -53,6 +53,7 @@ public class CSVDataManager {
         loadRooms(roomFile);
         loadTimetable(timetableFile);
         loadModuleLecturer(moduleLecturerFile);
+        loadUsers(usersFile);
     }
 
 
@@ -418,7 +419,7 @@ public class CSVDataManager {
         ArrayList<String[]> rows = new ArrayList<>();
 
         for (StudentGroup group : groups) {
-            String parentGroupId = getParentGroupById(group);
+            String parentGroupId = getParentGroupId(group);
             rows.add(toCSV(group, parentGroupId));
         }
         CSVutils.writeCSV(filePath, rows);
@@ -463,13 +464,22 @@ public class CSVDataManager {
      * It checks if the given group is a subgroup of a parent group. If it is it returns the parent group id
      * @param subGroup the group to be checked for parent groups
      * */
-    private String getParentGroupById(StudentGroup subGroup) {
+    public String getParentGroupId(StudentGroup subGroup) {
         for (StudentGroup group : groups) {
             if (group.getSubGroups().contains(subGroup)) {
                 return group.getGroupId();
             }
         }
         return "";
+    }
+
+    public StudentGroup getParentGroupById(String parentId) {
+        for (StudentGroup group : groups) {
+            if (group.getGroupId().equals(parentId)) {
+                return group;
+            }
+        }
+        return null;
     }
 
     //                  END OF STUDENT GROUP FUNCTIONS
@@ -495,9 +505,10 @@ public class CSVDataManager {
     public void saveUsers(String filePath) throws IOException {
         ArrayList<String[]> rows = new ArrayList<>();
 
-        for (User user : users) {
+        for (User user : this.getUsers()) {
             rows.add(toCSV(user));
         }
+
         CSVutils.writeCSV(filePath, rows);
     }
 

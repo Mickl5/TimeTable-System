@@ -20,6 +20,23 @@ public class ScheduleGenerator {
 
 
     /**
+     * Method to generate a timetable for all semesters by calling generateForSemester for each semester
+     * @return the generated timetable for all semesters
+     * */
+    public Timetable generateForAllSemesters() {
+        Timetable t1 = generateForSemester(1);
+        // add t1 sessions as "existing" for t2 generation context by temporarily merging into data manager's timetable
+        // (we avoid mutating dataManager here - generator maintains local existingAll logic)
+        Timetable t2 = generateForSemester(2);
+
+        Timetable merged = new Timetable();
+        for (Session s : t1.getSessions()) merged.addSession(s);
+        for (Session s : t2.getSessions()) merged.addSession(s);
+        return merged;
+    }
+
+
+    /**
      * Method to generate the timetable for all programmes for a given semester
      * @param semesterNumber the semester to be generated for
      * @return a timetable object holding all the sessions for the semester
@@ -50,6 +67,7 @@ public class ScheduleGenerator {
                         if (!groups.get(i).getSubGroups().isEmpty()) {
                             for (int j = 0; j < lecHours; j++) {
                                 Session session = tryCreateSession(module, SessionType.LECTURE, 60, semesterNumber, existing, groups.get(i));
+                                if (session == null) continue;
                                 timetable.addSession(session);
                                 existing.add(session);
                             }
@@ -57,6 +75,7 @@ public class ScheduleGenerator {
                         else {
                             for (int j = 0; j < tutHours; j++) {
                                 Session session = tryCreateSession(module, SessionType.TUTORIAL, 60, semesterNumber, existing, groups.get(i));
+                                if (session == null) continue;
                                 timetable.addSession(session);
                                 existing.add(session);
                             }
@@ -64,6 +83,7 @@ public class ScheduleGenerator {
                             for (int j = 0; j < labHours; j++) {
                                 SessionType type = SessionType.valueOf(String.valueOf(module.getLabType()));
                                 Session session = tryCreateSession(module, type, 60, semesterNumber, existing, groups.get(i));
+                                if (session == null) continue;
                                 timetable.addSession(session);
                                 existing.add(session);
                             }
@@ -159,7 +179,6 @@ public class ScheduleGenerator {
         }
         for (Lecturer lecturer : lecturers) {
             if (!requiredType.equals(lecturer.getType())) continue;
-            System.out.println("Checking for lecturer type " + String.valueOf(requiredType));
             Session session = createSession(SessionType.LECTURE, module, null, lecturer, group, day, startTime, durationMins, semesterNumber);
             if (!ConflictChecker.hasConflict(session, existing)) {
                 return lecturer;

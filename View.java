@@ -10,28 +10,37 @@ public class View {
         this.controller = controller;
     }
 
-    public void viewSubjectTimetable(String subjectCode) {
-        ArrayList<Session> list = controller.getTimetableForSubject(subjectCode).getSessions();
+    public boolean viewSubjectTimetable(String subjectCode, int yearNumber, int semesterNumber) {
+        ArrayList<Session> list = controller.getTimetableForSubject(subjectCode, yearNumber, semesterNumber).getSessions();
+        if(list.isEmpty()) {
+            return false;
+        }
         System.out.printf("================= TIMETABLE FOR %s =================\n",subjectCode);
         printTimetable(list);
+        return true;
     }
 
-    public void viewModuleTimetable(String moduleCode) {
+    public boolean viewModuleTimetable(String moduleCode) {
         ArrayList<Session> list = controller.getTimetableForModule(moduleCode).getSessions();
+        if(list.isEmpty()) {
+            return false;
+        }
         System.out.printf("================= TIMETABLE FOR %s =================\n",moduleCode);
-
         printTimetable(list);
+        return true;
     }
 
-    public void viewRoomTimetable(String roomCode) {
+    public boolean viewRoomTimetable(String roomCode) {
         ArrayList<Session> list = controller.getTimetableForRoom(roomCode).getSessions();
+        if(list.isEmpty()) {
+            return false;
+        }
         System.out.printf("================= TIMETABLE FOR %s =================\n",roomCode);
-
         printTimetable(list);
+        return true;
     }
 
     public void printTimetable(ArrayList<Session> list) {
-        // Step 1: group by day
         Map<DayOfWeek, ArrayList<Session>> byDay = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
             byDay.put(day, new ArrayList<>());
@@ -41,13 +50,10 @@ public class View {
             byDay.get(s.getDayOfWeek()).add(s);
         }
 
-        // Step 2: sort each day by time
         for (DayOfWeek day : DayOfWeek.values()) {
             ArrayList<Session> list2 = byDay.get(day);
             bubbleSortByTime(list2);
         }
-
-        // Step 3: print timetable
 
 
         for (DayOfWeek day : DayOfWeek.values()) {
@@ -58,14 +64,18 @@ public class View {
             }
 
             System.out.println("\n" + day);
+            System.out.printf("  %-12s %-7s %-42s %-12s %-7s %-15s Group\n", "Time", "Module", "Module Name", "Type", "Room", "Lecturer");
 
             for (Session s : orderedList) {
+
                 System.out.printf(
-                        "  %s–%s  %-37s %-12s %-15s Group %s%n",
+                        "  %s–%s  %-7s %-42s %-12s %-7s %-15s %s%n",
                         s.getTime(),
                         s.getEndTime(),
+                        s.getModule().getCode(),
                         s.getModule().getName(),
                         s.getType(),
+                        s.getRoom().GetRoomId(),
                         s.getLecturer().getLecturerName(),
                         s.getGroup().getGroupId()
                 );

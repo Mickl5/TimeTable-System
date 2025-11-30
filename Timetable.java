@@ -18,7 +18,19 @@ public class Timetable {
 
     /**Adds a session to the timetable*/
     public void addSession(Session session){
+        if (ConflictChecker.hasConflict(session, getSessions())) {
+            System.out.println("The entered session overlaps an existing session");
+            return;
+        }
         sessions.add (session);
+    }
+
+    /**
+     * Removes the given session from the timetable
+     * @param session
+     * */
+    public void removeSession(Session session) {
+        sessions.remove(session);
     }
 
 }

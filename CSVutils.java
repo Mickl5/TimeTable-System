@@ -20,7 +20,12 @@ public class CSVutils {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            if(filePath.isEmpty()) {
+                System.out.println("The file path is empty");
+            }
+            else {
+                System.out.println("Couldn't find a file at: " + filePath);
+            }
         }
 
         return rows;
