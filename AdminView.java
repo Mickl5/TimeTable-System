@@ -157,8 +157,6 @@ public class AdminView extends View {
             }
 
             else if (ans.equals("2")) {
-                System.out.println("Enter sessionId:");
-                String sessionId = scanner.nextLine();
 
                 SessionType type = null;
                 while (type == null) {
@@ -270,7 +268,7 @@ public class AdminView extends View {
                     }
                 }
 
-                Session session = new Session(sessionId, type, module, room, lecturer, group, dayOfWeek, localTime, duration, semesterNumber);
+                adminController.removeSession(type, module, room, lecturer, group, dayOfWeek, localTime, duration, semesterNumber);
             }
 
             else if (ans.equals("3")) {

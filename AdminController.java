@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -145,15 +147,29 @@ public class AdminController extends Controller {
     }
 
     /**
-     * removes a session from the existing timetable
-     * @param session session to be removed
+     * removes a session from the existing timetable by searching for matching attributes
+     * @param type the type of session to be removed
+     * @param module the module the session belongs to
+     * @param room the room the session takes palce in
+     * @param lecturer the lecturer that teaches the session
+     * @param group the group that attends the session
+     * @param day the day the session takes place in
+     * @param time the time the session starts
+     * @param semesterNumber the semester of the session
+     * @param durationMinutes the duration in minutes of the session
      * @return true if removed, else false
      */
-    public boolean removeSession(Session session) {
-        if (session == null) return false;
-        getManager().getTimetable().removeSession(session);
-        saveTimetable();
-        return true;
+    public boolean removeSession(SessionType type, Module module, Room room, Lecturer lecturer, StudentGroup group,
+                                 DayOfWeek day, LocalTime time, int durationMinutes, int semesterNumber) {
+        for (Session session : getManager().getTimetable().getSessions()) {
+            if (session.getType().equals(type) && session.getModule().equals(module) && session.getRoom().equals(room) &&
+                    session.getLecturer().equals(lecturer) && session.getGroup().equals(group) && session.getDayOfWeek().equals(day) &&
+                    session.getTime().equals(time) && session.getDurationMinutes() == durationMinutes && session.getSemesterNumber() == semesterNumber) {
+                getManager().getTimetable().removeSession(session);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

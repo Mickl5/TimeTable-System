@@ -64,12 +64,12 @@ public class View {
             }
 
             System.out.println("\n" + day);
-            System.out.printf("  %-12s %-7s %-42s %-12s %-7s %-15s Group\n", "Time", "Module", "Module Name", "Type", "Room", "Lecturer");
+            System.out.printf("  %-12s %-7s %-42s %-12s %-7s %-16s %-11s Group\n", "Time", "Module", "Module Name", "Type", "Room", "Lecturer", "Lecturer Id");
 
             for (Session s : orderedList) {
 
                 System.out.printf(
-                        "  %s–%s  %-7s %-42s %-12s %-7s %-15s %s%n",
+                        "  %s–%s  %-7s %-42s %-12s %-7s %-16s %-11s %s%n",
                         s.getTime(),
                         s.getEndTime(),
                         s.getModule().getCode(),
@@ -77,6 +77,7 @@ public class View {
                         s.getType(),
                         s.getRoom().GetRoomId(),
                         s.getLecturer().getLecturerName(),
+                        s.getLecturer().getLecturerId(),
                         s.getGroup().getGroupId()
                 );
             }
