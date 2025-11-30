@@ -79,6 +79,23 @@ public class ConflictChecker {
      * */
     private static boolean groupConflict(Session newSession, Session oldSession) {
         if (newSession.getGroup() == null || oldSession.getGroup() == null) return false;
-        return newSession.getGroup().getGroupId() == oldSession.getGroup().getGroupId();
+        if (newSession.getGroup().getGroupId().equals(oldSession.getGroup().getGroupId())) {
+            return true;
+        }
+        if(!oldSession.getGroup().getSubGroups().isEmpty()) {
+            for (StudentGroup group : oldSession.getGroup().getSubGroups()) {
+                if (newSession.getGroup().getGroupId().equals(group.getGroupId())) {
+                    return true;
+                }
+            }
+        }
+        if(!newSession.getGroup().getSubGroups().isEmpty()) {
+            for (StudentGroup group : newSession.getGroup().getSubGroups()) {
+                if (oldSession.getGroup().getGroupId().equals(group.getGroupId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

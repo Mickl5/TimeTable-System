@@ -25,6 +25,8 @@ public class View {
      * @param semesterNumber  the semester
      * */
     public boolean viewSubjectTimetable(String subjectCode, int yearNumber, int semesterNumber) {
+        Timetable timetable = controller.getTimetableForSubject(subjectCode,yearNumber,semesterNumber);
+        if (timetable == null) return false;
         ArrayList<Session> list = controller.getTimetableForSubject(subjectCode, yearNumber, semesterNumber).getSessions();
         if(list.isEmpty()) {
             return false;

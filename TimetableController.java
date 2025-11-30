@@ -76,6 +76,7 @@ public class TimetableController extends Controller {
     public Timetable getTimetableForSubject(String subjectCode, int yearNumber, int semesterNumber) {
         Timetable timetable = new Timetable();
         Subjects subject = getManager().getSubjectById(subjectCode);
+        if(subject == null) return null;
         for (Session session : getManager().getTimetable().getSessions()) {
             SubjectsYear year = subject.getYear(yearNumber);
             if (session.getGroup().getSubject().equals(subject) && session.getGroup().getSubjectYear().equals(year) && session.getSemesterNumber() == semesterNumber) {
@@ -96,7 +97,7 @@ public class TimetableController extends Controller {
         Module module = getManager().getModuleById(moduleCode);
         for (Session session : getManager().getTimetable().getSessions()) {
             if (session.getModule().equals(module)) {
-                timetable.addSession(session);
+                timetable.addSessionIgnoresConflicts(session);
             }
         }
         return timetable;

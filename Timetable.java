@@ -33,4 +33,8 @@ public class Timetable {
         sessions.remove(session);
     }
 
+    public void addSessionIgnoresConflicts(Session session) {
+        sessions.add(session);
+    }
+
 }
