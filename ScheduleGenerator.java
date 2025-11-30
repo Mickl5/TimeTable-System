@@ -30,8 +30,8 @@ public class ScheduleGenerator {
         Timetable t2 = generateForSemester(2);
 
         Timetable merged = new Timetable();
-        for (Session s : t1.getSessions()) merged.addSession(s);
-        for (Session s : t2.getSessions()) merged.addSession(s);
+        for (Session s : t1.getSessions()) merged.addSessionIgnoresConflicts(s);
+        for (Session s : t2.getSessions()) merged.addSessionIgnoresConflicts(s);
         return merged;
     }
 
@@ -47,10 +47,9 @@ public class ScheduleGenerator {
         ArrayList<Subjects> subjects = manager.getSubjects();
 
         ArrayList<Session> existing = new ArrayList<>();
-        Timetable alreadyExisting = manager.getTimetable();
-        if (alreadyExisting.getSessions() != null) {
-            existing.addAll(alreadyExisting.getSessions());
-        }
+
+        ArrayList<Module> modules = new ArrayList<>();
+
         for (Subjects subject : subjects) {
             for (SubjectsYear year : subject.getYears()) {
                 ArrayList<ModuleOffering> offerings = year.getModulesForSemester(semesterNumber);
@@ -64,31 +63,60 @@ public class ScheduleGenerator {
                     ArrayList<StudentGroup> groups = offering.getEnrolledGroups();
 
                     for (int i = 0; i < groups.size(); i++) {
-                        if (!groups.get(i).getSubGroups().isEmpty()) {
-                            for (int j = 0; j < lecHours; j++) {
-                                Session session = tryCreateSession(module, SessionType.LECTURE, 60, semesterNumber, existing, groups.get(i));
-                                if (session == null) continue;
-                                timetable.addSession(session);
-                                existing.add(session);
+                        if(modules.contains(module)) {
+                            if (!groups.get(i).getSubGroups().isEmpty()) {
+                                for (Session session : existing) {
+                                    if(session.getType().equals(SessionType.LECTURE) && session.getModule().equals(module)) {
+                                        Session sharedSession = generateSharedLectures(session, groups.get(i));
+                                        timetable.addSessionIgnoresConflicts(sharedSession);
+                                    }
+                                }
+                            }
+                            else {
+                                for (int j = 0; j < tutHours; j++) {
+                                    Session session = tryCreateSession(module, SessionType.TUTORIAL, 60, semesterNumber, existing, groups.get(i));
+                                    if (session == null) continue;
+                                    timetable.addSession(session);
+                                    existing.add(session);
+                                }
+
+                                for (int j = 0; j < labHours; j++) {
+                                    SessionType type = SessionType.valueOf(String.valueOf(module.getLabType()));
+                                    Session session = tryCreateSession(module, type, 60, semesterNumber, existing, groups.get(i));
+                                    if (session == null) continue;
+                                    timetable.addSession(session);
+                                    existing.add(session);
+                                }
                             }
                         }
                         else {
-                            for (int j = 0; j < tutHours; j++) {
-                                Session session = tryCreateSession(module, SessionType.TUTORIAL, 60, semesterNumber, existing, groups.get(i));
-                                if (session == null) continue;
-                                timetable.addSession(session);
-                                existing.add(session);
+                            if (!groups.get(i).getSubGroups().isEmpty()) {
+                                for (int j = 0; j < lecHours; j++) {
+                                    Session session = tryCreateSession(module, SessionType.LECTURE, 60, semesterNumber, existing, groups.get(i));
+                                    if (session == null) continue;
+                                    timetable.addSession(session);
+                                    existing.add(session);
+                                }
                             }
+                            else {
+                                for (int j = 0; j < tutHours; j++) {
+                                    Session session = tryCreateSession(module, SessionType.TUTORIAL, 60, semesterNumber, existing, groups.get(i));
+                                    if (session == null) continue;
+                                    timetable.addSession(session);
+                                    existing.add(session);
+                                }
 
-                            for (int j = 0; j < labHours; j++) {
-                                SessionType type = SessionType.valueOf(String.valueOf(module.getLabType()));
-                                Session session = tryCreateSession(module, type, 60, semesterNumber, existing, groups.get(i));
-                                if (session == null) continue;
-                                timetable.addSession(session);
-                                existing.add(session);
+                                for (int j = 0; j < labHours; j++) {
+                                    SessionType type = SessionType.valueOf(String.valueOf(module.getLabType()));
+                                    Session session = tryCreateSession(module, type, 60, semesterNumber, existing, groups.get(i));
+                                    if (session == null) continue;
+                                    timetable.addSession(session);
+                                    existing.add(session);
+                                }
                             }
                         }
                     }
+                    modules.add(module);
 
                 }
             }
@@ -273,5 +301,11 @@ public class ScheduleGenerator {
             times.add(LocalTime.of(i, 0));
         }
         return times;
+    }
+
+    private Session generateSharedLectures(Session session, StudentGroup group) {
+        Session sharedSession = new Session(session.getSessionId(), session.getType(), session.getModule(), session.getRoom(),
+                session.getLecturer(), group, session.getDayOfWeek(), session.getTime(), session.getDurationMinutes(), session.getSemesterNumber());
+        return sharedSession;
     }
 }
