@@ -14,7 +14,7 @@ public class RoomController extends Controller{
 
 
     /**Adds a room to the controllers list
-     *@param Room the room to be added */
+     *@param room the room to be added */
     public void addRoom(Room room) {
         getManager().getRooms().add(room);
     }
@@ -24,7 +24,7 @@ public class RoomController extends Controller{
      *@return If true, the room was found and removed, else input was null*/
     public boolean removeRoom(String roomId) {
         for (Room room : getManager().getRooms()) {
-            if (room.getCode().equals(roomId)) {
+            if (room.GetRoomId().equals(roomId)) {
                 getManager().getRooms().remove(room);
                 return true;
             }
@@ -38,12 +38,13 @@ public class RoomController extends Controller{
      *@return the room if its found or null if no room matches*/
     public Room getRoom(String code) {
         for (Room room : getManager().getRooms()) {
-            if (room.getCode().equals(code)) {
+            if (room.GetRoomId().equals(code)) {
                 return room;
             }
         }
         return null;
     }
 }
+
 
 
