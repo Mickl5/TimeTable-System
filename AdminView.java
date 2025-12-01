@@ -3,6 +3,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+
 /**
  * Class showing what the admin views, inherits from view
  * */
@@ -383,5 +384,6 @@ public class AdminView extends View {
     }
 
     }
+
 
 
